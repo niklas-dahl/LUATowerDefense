@@ -8,13 +8,12 @@ function DirectedProjectile.create()
     local instance = {}
     setmetatable(instance, DirectedProjectile)
     instance.target = nil
-    instance.pos_x = 0
-    instance.pos_y = 0
+    instance.pos = nil
     instance.speed = 0.5
     instance.damage = 1
+    instance.laserProjectile = false
     return instance
 end
-
 
 function DirectedProjectile:update(dt)
 
@@ -24,27 +23,30 @@ function DirectedProjectile:update(dt)
 
     local target_pos = self.target:get_pos()
 
-    local v_x = target_pos[1] - self.pos_x
-    local v_y = target_pos[2] - self.pos_y
-    
-    local v_size = math.sqrt(v_x * v_x + v_y * v_y)
+    local direction = target_pos - self.pos  
+    local dist = direction:len()
 
-    if v_size < 20.0 then
+    if dist < 20.0 then
         self.target:on_hit(self.damage)
         return false
     end
 
-    v_x = v_x / v_size * 500.0 * self.speed * dt
-    v_y = v_y / v_size * 500.0 * self.speed * dt
-
-    self.pos_x = self.pos_x + v_x
-    self.pos_y = self.pos_y + v_y
-
+    local velocity = direction / dist * 500.0 * self.speed * dt
+    self.pos = self.pos + velocity
     return true
 end
 
 
 function DirectedProjectile:draw()
-    love.graphics.setColor(0, 255, 255, 150)
-    love.graphics.circle("fill", self.pos_x, self.pos_y, 3, 10)
+    if(self.laserProjectile) then
+        local target_pos = self.target:get_pos()
+        local direction = target_pos - self.pos
+        direction = direction / direction:len() * 15
+
+        love.graphics.setColor(255, 0, 0, 150)
+        love.graphics.line(self.pos.x, self.pos.y, self.pos.x+direction.x, self.pos_y+direction.y)
+    else
+        love.graphics.setColor(0, 255, 255, 150)
+        love.graphics.circle("fill", self.pos.x, self.pos.y, 3, 10)
+    end
 end
