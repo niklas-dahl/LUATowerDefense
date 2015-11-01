@@ -238,6 +238,10 @@ function love.draw()
 
     if true then
 
+        -- Feld zeichnen
+
+        love.graphics.setScissor(field_start.x, field_start.y, field_start.x + field_width * field_size.x, field_start.y + field_height * field_size.y)
+
         for x = 1, field_width do
             for y = 1, field_height do
                 local obj = game_field[y][x]
@@ -292,6 +296,8 @@ function love.draw()
             local entity = entities[i]
             entity:draw()
         end
+
+        love.graphics.setScissor()
 
 
         draw_gui()

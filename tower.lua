@@ -56,16 +56,17 @@ function Tower.draw_shape(clstype, x, y, radius, upgrade, is_valid, selected)
 
     if radius >= 0 then
 
+
         if is_valid then
             if selected then
-                love.graphics.setColor(127, 255, 127, 150)
+                love.graphics.setColor(0, 127, 0, 150)
                 love.graphics.circle("line", x, y, radius, 80)  
-                love.graphics.setColor(127, 255, 127, 20)
+                love.graphics.setColor(0, 127, 0, 20)
                 love.graphics.circle("fill", x, y, radius, 80) 
             else
-                love.graphics.setColor(0, 127, 255, 150)
+                love.graphics.setColor(0, 127, 255, 70)
                 love.graphics.circle("line", x, y, radius, 80)  
-                love.graphics.setColor(0, 127, 255, 20)
+                love.graphics.setColor(0, 127, 255, 10)
                 love.graphics.circle("fill", x, y, radius, 80)  
             end
         else
