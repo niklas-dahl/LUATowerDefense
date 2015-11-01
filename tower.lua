@@ -16,17 +16,20 @@ function Tower.create()
     instance.last_shoot_time = 0.0
     instance.shoot_speed = 1.0
     instance.upgrade = 1
+    instance.damage = 1
     return instance
 end
 
 
 function Tower:draw()
     local pos = self:get_pos()
-    self.draw_shape(pos.x, pos.y, self.radius, self.upgrade, true)
+
+    self.draw_shape(pos.x, pos.y, self.radius, self.upgrade, true, self == selected_tower)
+
 end
 
 
-function Tower.draw_shape(x, y, radius, upgrade, is_valid)
+function Tower.draw_shape(x, y, radius, upgrade, is_valid, selected)
 
     love.graphics.setColor(upgrade*10, 127-10*upgrade, 255-20*upgrade, 255)
 
@@ -35,10 +38,17 @@ function Tower.draw_shape(x, y, radius, upgrade, is_valid)
     if radius >= 0 then
 
         if is_valid then
-            love.graphics.setColor(0, 127, 255, 150)
-            love.graphics.circle("line", x, y, radius, 80)  
-            love.graphics.setColor(0, 127, 255, 20)
-            love.graphics.circle("fill", x, y, radius, 80)  
+            if selected then
+                love.graphics.setColor(127, 255, 127, 150)
+                love.graphics.circle("line", x, y, radius, 80)  
+                love.graphics.setColor(127, 255, 127, 20)
+                love.graphics.circle("fill", x, y, radius, 80) 
+            else
+                love.graphics.setColor(0, 127, 255, 150)
+                love.graphics.circle("line", x, y, radius, 80)  
+                love.graphics.setColor(0, 127, 255, 20)
+                love.graphics.circle("fill", x, y, radius, 80)  
+            end
         else
             love.graphics.setColor(255, 50, 0, 150)
             love.graphics.circle("line", x, y, radius, 80)  
@@ -46,6 +56,22 @@ function Tower.draw_shape(x, y, radius, upgrade, is_valid)
             love.graphics.circle("fill", x, y, radius, 80)  
         end
     end
+end
+
+function Tower:do_upgrade()
+
+    if self:get_upgrade_cost() <= player_money then
+        player_money = player_money - self:get_upgrade_cost()
+        self.upgrade = self.upgrade + 1
+        self.damage = self.damage + 1
+        self.radius = self.radius + 20
+        self.shoot_frequency = self.shoot_frequency * 0.9
+    end
+
+end
+
+function Tower:get_upgrade_cost()
+    return 100
 end
 
 
@@ -73,6 +99,7 @@ function Tower:update()
                 local proj = DirectedProjectile.create()
                 proj.target = self.target
                 proj.speed = self.shoot_speed
+                proj.damage = self.damage
                 proj.pos = pos
                 table.insert(projectiles, proj)
 

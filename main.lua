@@ -33,6 +33,7 @@ player_lifes = 1
 player_money = 1000
 last_entity_spawned = 0.0
 tower_under_cursor = nil
+selected_tower = nil
 
 mouse = Vector(0, 0)
 
@@ -124,11 +125,8 @@ function load_field()
             end
 
             game_field[y+1][x+1] = field
-
         end
     end
-
-
 end
 
 function love.load(arg)
@@ -201,6 +199,7 @@ end
 function start_wave()
     tower_under_cursor = nil
     simulation_running = true
+    selected_tower = nil
     entity_queue = spawn_wave()
     entities = {}
     projectiles = {}

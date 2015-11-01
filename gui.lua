@@ -6,9 +6,11 @@ gui_pos = Vector(1100, 100)
 
 btn_start_wave = {["text"] = "Start wave", ["pos"] = Vector(gui_pos.x, 500), ["size"] = Vector(130, 40) }
 btn_cheat = {["text"] = "Cheat", ["pos"] = Vector(gui_pos.x, 550), ["size"] = Vector(130, 40) }
+btn_upgrade = {["text"] = "Upgrade Tower", ["pos"] = Vector(900, 750), ["size"] = Vector(130, 40) }
 
 
 ctrl_towers = Vector(gui_pos.x, gui_pos.y + 200)
+
 
 function get_tower_ctrl_offs(index)
     return ctrl_towers + Vector(0, index * (field_size.y + 10) )
@@ -48,6 +50,15 @@ function check_button_actions()
     if is_btn_hovered(btn_cheat) then
         player_money = player_money*2 + 1000
     end
+
+
+    -- BTN_UPGRADE
+    if is_btn_hovered(btn_upgrade) then
+        if selected_tower ~= nil then
+            selected_tower:do_upgrade()
+        end
+    end
+
 end
 
 function can_place_tower_at(x, y)
@@ -68,42 +79,52 @@ end
 
 function on_gui_click(x, y)
 
-        local tile = get_field_at(Vector(x, y))
+    local tile = get_field_at(Vector(x, y))
 
-        -- Upgraden eines Towers
-        if player_money >= 50 and tile ~= nil then
-            local tile_data = get_field_data(tile)
+    -- Upgraden eines Towers
+    -- if player_money >= 50 and tile ~= nil then
+    --     local tile_data = get_field_data(tile)
 
-            if tile_data ~= nil and tile_data~=0 and tile_data~=1 and tile_data~=2 then
-                tile_data.radius = tile_data.radius+20
-                tile_data.shoot_frequency = tile_data.shoot_frequency*0.8
-                tile_data.upgrade = tile_data.upgrade+2;
-                player_money = player_money - 50
-            end
+    --     if tile_data ~= nil and tile_data~=0 and tile_data~=1 and tile_data~=2 then
+    --         tile_data.radius = tile_data.radius+20
+    --         tile_data.shoot_frequency = tile_data.shoot_frequency*0.8
+    --         tile_data.upgrade = tile_data.upgrade+2;
+    --         player_money = player_money - 50
+    --     end
+    -- end
+
+    -- Klicken auf das Tower-Build Menü
+    for f = 1, #tower_types do
+        local offs = get_tower_ctrl_offs(f - 1)
+        if is_hovered(offs, field_size) then
+            tower_under_cursor = tower_types[f]
+            selected_tower = nil
+            return
         end
+    end
 
-        -- Klicken auf das Tower-Build Menü
-        for f = 1, #tower_types do
-            local offs = get_tower_ctrl_offs(f - 1)
-            if is_hovered(offs, field_size) then
-                tower_under_cursor = tower_types[f]
-                return
-            end
-        end
+    -- Neuen Tower platzieren
+    if tower_under_cursor ~= nil and tower_under_cursor.cost <= player_money then
+        if can_place_tower_at(x, y) then
+            local rel_pos = Vector(x, y) - field_start
+            rel_pos = rel_pos / field_size + 0.5
+            local tower = tower_under_cursor.create()
+            tower.field_pos = rel_pos
 
-        -- Neuen Tower platzieren
-        if tower_under_cursor ~= nil and tower_under_cursor.cost <= player_money then
-            if can_place_tower_at(x, y) then
-                local rel_pos = Vector(x, y) - field_start
-                rel_pos = rel_pos / field_size + 0.5
-                local tower = tower_under_cursor.create()
-                tower.field_pos = rel_pos
-                print("TOWER POS = " .. tostring(rel_pos))
-                table.insert(towers, tower)
-                player_money = player_money - tower.cost
-                return
-            end
+            table.insert(towers, tower)
+            player_money = player_money - tower.cost
+            return
         end
+    end
+
+    if tower_under_cursor == nil then
+
+        local tower = closest_tower(Vector(x, y))
+        if tower ~= nil and Vector.distance(tower:get_pos(), Vector(x, y)) < 30 then
+            selected_tower = tower
+        end
+    end
+
 
 end
 
@@ -161,6 +182,37 @@ function draw_gui()
             love.graphics.setColor(255, 0, 0, 255)
             love.graphics.print("You don't have enough money!", mouse.x - 10, mouse.y + 40)
         end
+
+    end
+
+    -- Draw selected tower
+
+
+    local upgrade_pos = Vector(field_start.x, field_start.y + (field_height+1) * field_size.y)
+
+
+    love.graphics.setColor(0, 0, 0, 100)
+    love.graphics.rectangle("fill", upgrade_pos.x, upgrade_pos.y, 1000, 140)
+
+    if selected_tower ~= nil then
+
+        love.graphics.setColor(20, 20, 20, 255)
+        love.graphics.print("Selected Tower", upgrade_pos.x + 10, upgrade_pos.y + 10)
+        love.graphics.setColor(20, 20, 20, 190)
+        love.graphics.print("Upgrade: " .. (selected_tower.upgrade), upgrade_pos.x + 10, upgrade_pos.y + 30)
+        love.graphics.print("Radius: " .. (selected_tower.radius), upgrade_pos.x + 10, upgrade_pos.y + 50)
+        love.graphics.print("Damage: " .. (selected_tower.damage), upgrade_pos.x + 10, upgrade_pos.y + 70)
+        love.graphics.print("Shoot speed: " .. (selected_tower.shoot_frequency), upgrade_pos.x + 10, upgrade_pos.y + 90)
+
+        local cost = selected_tower:get_upgrade_cost()
+
+        if cost <= player_money then
+            render_button(btn_upgrade)
+        else
+            love.graphics.setColor(255, 100, 100, 255)
+            love.graphics.print("Can't afford upgrade!", 750, 750)  
+        end
+
 
     end
 
