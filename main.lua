@@ -133,6 +133,12 @@ end
 function love.load(arg)
     playMusic("music")
 
+    font = love.graphics.newFont("res/font.ttf", 14)
+    love.graphics.setFont(font)
+
+    big_font = love.graphics.newFont("res/font.ttf", 23)
+
+
     background = love.graphics.newImage("res/background.png")
     load_field()
 end

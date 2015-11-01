@@ -16,7 +16,7 @@ function Tower.create()
     instance.last_shoot_time = 0.0
     instance.shoot_speed = 1.0
     instance.upgrade = 1
-    instance.damage = 1
+    instance.damage = 3
     return instance
 end
 
@@ -71,7 +71,7 @@ function Tower:do_upgrade()
 end
 
 function Tower:get_upgrade_cost()
-    return 100
+    return 100 + self.upgrade * 50
 end
 
 
