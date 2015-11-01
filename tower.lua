@@ -39,6 +39,8 @@ end
 function Tower.draw_inner_shape(x, y, upgrade)
     love.graphics.setColor(upgrade*10, 127-10*upgrade, 255-20*upgrade, 255)
     love.graphics.rectangle("fill", x - 10, y - 10, 20, 20)
+    love.graphics.setColor(0, 0, 0, 255)
+    love.graphics.rectangle("line", x - 11, y - 11, 22, 22)
 end
 
 function Tower.draw_shape(clstype, x, y, radius, upgrade, is_valid, selected)
@@ -88,7 +90,7 @@ function Tower:do_upgrade()
 end
 
 function Tower:get_upgrade_cost()
-    return 100 + self.upgrade * 50
+    return 150 + self.upgrade * self.upgrade * 20
 end
 
 

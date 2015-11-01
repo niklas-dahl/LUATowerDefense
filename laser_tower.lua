@@ -2,9 +2,9 @@
 LaserTower = Tower.create()
 LaserTower.__index = LaserTower
 LaserTower.radius = 270
-LaserTower.cost = 550
+LaserTower.cost = 900
 LaserTower.name = "Laser Tower"
-LaserTower.shoot_speed = 10.0
+LaserTower.shoot_speed = 3.0
 
 
 function LaserTower.draw_inner_shape(x, y, upgrade)
