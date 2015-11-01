@@ -13,6 +13,16 @@ btn_fast_forward = {["text"] = "Enable Fast Forward", ["pos"] = Vector(gui_pos.x
 ctrl_towers = Vector(gui_pos.x, gui_pos.y + 200)
 
 
+function is_hovered(pos, size)
+    if mouse.x >= pos.x and mouse.y >= pos.y then
+        if mouse.x < pos.x + size.x and mouse.y < pos.y + size.y then
+            return true
+        end
+    end
+    return false
+end
+
+
 function get_tower_ctrl_offs(index)
     return ctrl_towers + Vector(0, index * (field_size.y + 10) )
 end
@@ -21,6 +31,7 @@ end
 function is_btn_hovered(btn)
     return is_hovered(btn.pos, btn.size)
 end
+
 
 
 function render_button(btn)
@@ -238,7 +249,7 @@ function draw_gui()
             love.graphics.print("Cost: " .. cost .. "$", 900, 730)  
         else
             love.graphics.setColor(255, 20, 20, 255)
-            love.graphics.print("Can't afford upgrade!", 800, 730)  
+            love.graphics.print("Can't afford upgrade!", 900, 730)  
         end
 
 

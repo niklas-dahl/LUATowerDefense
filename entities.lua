@@ -54,3 +54,23 @@ function spawn_wave()
     return objs
 end
 
+
+function start_wave()
+    tower_under_cursor = nil
+    simulation_running = true
+    selected_tower = nil
+    entity_queue = spawn_wave()
+    entities = {}
+    projectiles = {}
+    wave_id = wave_id + 1
+end
+
+
+function stop_wave()
+
+    -- Cleanup first
+    entities = {}
+    projectiles = {}
+    entity_queue = {}
+    simulation_running = false
+end
