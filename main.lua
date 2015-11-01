@@ -5,6 +5,7 @@ require "directed_projectile"
 require "entities"
 require "tower"
 require "gui"
+require "sound"
 
 game_field = {}
 
@@ -130,6 +131,8 @@ function load_field()
 end
 
 function love.load(arg)
+    playMusic("music")
+
     background = love.graphics.newImage("res/background.png")
     load_field()
 end

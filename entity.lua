@@ -48,6 +48,7 @@ function Entity:on_hit(damage)
     if self.hp < 1 and not self.destroyed then
         self.destroyed = true
         player_money = player_money + self.money
+        playSound("coin")
     end
 end
 
