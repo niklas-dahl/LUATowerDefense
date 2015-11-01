@@ -79,13 +79,10 @@ end
 
 function Tower:do_upgrade()
 
-    if self:get_upgrade_cost() <= player_money then
-        player_money = player_money - self:get_upgrade_cost()
-        self.upgrade = self.upgrade + 1
-        self.damage = self.damage + 1
-        self.radius = self.radius + 20
-        self.shoot_frequency = self.shoot_frequency * 0.9
-    end
+    self.upgrade = self.upgrade + 1
+    self.damage = self.damage + 1
+    self.radius = self.radius + 20
+    self.shoot_frequency = self.shoot_frequency * 0.9
 
 end
 

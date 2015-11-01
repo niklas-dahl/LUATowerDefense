@@ -56,7 +56,11 @@ function check_button_actions()
     -- BTN_UPGRADE
     if is_btn_hovered(btn_upgrade) then
         if selected_tower ~= nil then
-            selected_tower:do_upgrade()
+            if selected_tower:get_upgrade_cost() <= player_money then
+                player_money = player_money - selected_tower:get_upgrade_cost()
+                selected_tower:do_upgrade()
+                playSound("upgrade")
+            end
         end
     end
 
@@ -117,6 +121,8 @@ function on_gui_click(x, y)
 
             table.insert(towers, tower)
             player_money = player_money - tower.cost
+
+            playSound("tower_placed")
             return
         end
     end
