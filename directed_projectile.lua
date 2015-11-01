@@ -23,7 +23,7 @@ function DirectedProjectile:update(dt)
 
     local target_pos = self.target:get_pos()
 
-    local direction = target_pos - self.pos  
+    local direction = target_pos - self.pos
     local dist = direction:len()
 
     if dist < 20.0 then
@@ -32,6 +32,11 @@ function DirectedProjectile:update(dt)
     end
 
     local velocity = direction / dist * 500.0 * self.speed * dt
+
+    if velocity:len() > dist then
+        velocity = velocity * (dist / velocity:len()) 
+    end
+
     self.pos = self.pos + velocity
     return true
 end
@@ -44,7 +49,7 @@ function DirectedProjectile:draw()
         direction = direction / direction:len() * 15
 
         love.graphics.setColor(255, 0, 0, 150)
-        love.graphics.line(self.pos.x, self.pos.y, self.pos.x+direction.x, self.pos_y+direction.y)
+        love.graphics.line(self.pos.x, self.pos.y, self.pos.x + direction.x, self.pos.y + direction.y)
     else
         love.graphics.setColor(0, 0, 0, 150)
         love.graphics.circle("fill", self.pos.x, self.pos.y, 3, 10)

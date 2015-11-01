@@ -6,6 +6,7 @@ require "entities"
 require "tower"
 require "gui"
 require "sound"
+require "laser_tower"
 
 game_field = {}
 
@@ -15,7 +16,7 @@ game_field = {}
 
 tower_types = {
     Tower,
-    -- LaserTower
+    LaserTower
 }
 
 

@@ -5,9 +5,9 @@ gui_pos = Vector(1100, 100)
 
 
 btn_start_wave = {["text"] = "Start wave", ["pos"] = Vector(gui_pos.x, 500), ["size"] = Vector(150, 40) }
-btn_cheat = {["text"] = "Cheat", ["pos"] = Vector(gui_pos.x, 550), ["size"] = Vector(150, 40) }
+btn_cheat = {["text"] = "Cheat", ["pos"] = Vector(gui_pos.x, 830), ["size"] = Vector(150, 40) }
 btn_upgrade = {["text"] = "Upgrade Tower", ["pos"] = Vector(900, 750), ["size"] = Vector(130, 40) }
-btn_fast_forward = {["text"] = "Enable Fast Forward", ["pos"] = Vector(gui_pos.x, 600), ["size"] = Vector(150, 40) }
+btn_fast_forward = {["text"] = "Enable Fast Forward", ["pos"] = Vector(gui_pos.x, 550), ["size"] = Vector(150, 40) }
 
 
 ctrl_towers = Vector(gui_pos.x, gui_pos.y + 200)
@@ -186,17 +186,19 @@ function draw_gui()
         love.graphics.rectangle("line", offs.x, offs.y, field_size.x, field_size.y)
 
         love.graphics.rectangle("line", offs.x, offs.y, field_size.x, field_size.y)
-        tower_type.draw_shape(offs.x + field_size.x / 2, offs.y + field_size.y / 2, -1, 1)
+        tower_type.draw_shape(tower_type, offs.x + field_size.x / 2, offs.y + field_size.y / 2, -1, 1)
         love.graphics.setColor(20, 20, 20, 255)
+        love.graphics.print(tower_type.name, offs.x + field_size.x + 10, offs.y + 5)
+        love.graphics.setColor(0, 150, 0, 255)
         if tower_type.cost > player_money then
             love.graphics.setColor(255, 0, 0, 255)
         end
-        love.graphics.print("Price: " .. tower_type.cost .. "$", offs.x + field_size.x + 10, offs.y + 10)
+        love.graphics.print("Price: " .. tower_type.cost .. "$", offs.x + field_size.x + 10, offs.y + 25)
     end
 
     if tower_under_cursor ~= nil then
         local could_place = can_place_tower_at(mouse.x, mouse.y) and tower_under_cursor.cost <= player_money
-        tower_under_cursor.draw_shape(mouse.x, mouse.y, tower_under_cursor.radius, 1, could_place)
+        tower_under_cursor.draw_shape(tower_under_cursor, mouse.x, mouse.y, tower_under_cursor.radius, 1, could_place)
 
         if tower_under_cursor.cost > player_money then
             love.graphics.setColor(255, 0, 0, 255)
@@ -210,12 +212,12 @@ function draw_gui()
 
 
     love.graphics.setColor(0, 0, 0, 100)
-    love.graphics.rectangle("fill", upgrade_pos.x, upgrade_pos.y, 1000, 140)
+    love.graphics.rectangle("line", upgrade_pos.x, upgrade_pos.y, 1000, 140)
 
     if selected_tower ~= nil then
 
         love.graphics.setColor(20, 20, 20, 255)
-        love.graphics.print("Selected Tower", upgrade_pos.x + 10, upgrade_pos.y + 10)
+        love.graphics.print(selected_tower.name, upgrade_pos.x + 10, upgrade_pos.y + 10)
         love.graphics.setColor(20, 20, 20, 190)
         love.graphics.print("Upgrade: " .. (selected_tower.upgrade), upgrade_pos.x + 10, upgrade_pos.y + 30)
         love.graphics.print("Radius: " .. (selected_tower.radius), upgrade_pos.x + 10, upgrade_pos.y + 50)
@@ -226,7 +228,7 @@ function draw_gui()
 
         if cost <= player_money then
             render_button(btn_upgrade)
-            love.graphics.setColor(100, 255, 100, 255)
+            love.graphics.setColor(0, 100, 0, 255)
             love.graphics.print("Cost: " .. cost .. "$", 900, 730)  
         else
             love.graphics.setColor(255, 20, 20, 255)

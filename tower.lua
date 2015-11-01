@@ -4,8 +4,7 @@ Tower = {}
 Tower.__index = Tower
 Tower.radius = 100
 Tower.cost = 200
-
--- require "laser_tower"
+Tower.name = "Default Tower"
 
 function Tower.create()
     local instance = {}
@@ -23,17 +22,37 @@ end
 
 function Tower:draw()
     local pos = self:get_pos()
-
-    self.draw_shape(pos.x, pos.y, self.radius, self.upgrade, true, self == selected_tower)
-
+    self.draw_shape(self, pos.x, pos.y, self.radius, self.upgrade, true, self == selected_tower)
 end
 
 
-function Tower.draw_shape(x, y, radius, upgrade, is_valid, selected)
+function Tower:shoot_projectile()
+    local proj = DirectedProjectile.create()
+    proj.target = self.target
+    proj.speed = self.shoot_speed
+    proj.damage = self.damage
+    proj.pos = self:get_pos()
+    table.insert(projectiles, proj)
+    return proj
+end
 
+function Tower.draw_inner_shape(x, y, upgrade)
     love.graphics.setColor(upgrade*10, 127-10*upgrade, 255-20*upgrade, 255)
-
     love.graphics.rectangle("fill", x - 10, y - 10, 20, 20)
+end
+
+function Tower.draw_shape(clstype, x, y, radius, upgrade, is_valid, selected)
+
+    clstype.draw_inner_shape(x, y, upgrade)
+
+    local uoffsx = (upgrade-1) * 2
+
+    for i = 1, upgrade - 1 do
+
+        love.graphics.setColor(20, 20, 20, 255)
+        love.graphics.rectangle("fill", x - uoffsx - 4 + 4 * i, y + field_size.y*0.4 - 4, 3, 3)
+
+    end
 
     if radius >= 0 then
 
@@ -96,13 +115,7 @@ function Tower:update()
             
             if time_diff > self.shoot_frequency then
 
-                local proj = DirectedProjectile.create()
-                proj.target = self.target
-                proj.speed = self.shoot_speed
-                proj.damage = self.damage
-                proj.pos = pos
-                table.insert(projectiles, proj)
-
+                self:shoot_projectile()
                 self.last_shoot_time = love.timer.getTime()
             end
         end

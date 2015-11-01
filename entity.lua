@@ -44,7 +44,7 @@ function Entity:get_pos()
 end
 
 function Entity:on_hit(damage)
-    self.hp = self.hp - damage
+    self.hp = math.max(0, self.hp - damage)
     if self.hp < 1 and not self.destroyed then
         self.destroyed = true
         player_money = player_money + self.money

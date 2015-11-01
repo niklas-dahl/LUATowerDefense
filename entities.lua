@@ -24,12 +24,12 @@ end
 function spawn_wave()
     local objs = {}
 
-    for i = 1, 10+wave_id*wave_id do
+    for i = 1, 10+wave_id do
 
         local entity = Entity.create()
-        entity.speed = 2.0 + wave_id * 0.3
-        entity.max_hp = 10 + wave_id * 2
-        entity.money = 20 + wave_id * 1
+        entity.speed = 2.0 + wave_id * 0.2
+        entity.max_hp = 10 + wave_id * 1
+        entity.money = 20 + wave_id * 2
 
         -- Blau (Tank)
         if i % math.max(0, 5 - wave_id) == 0 then
