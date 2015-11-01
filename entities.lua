@@ -30,7 +30,7 @@ function spawn_wave()
         entity.speed = 2.0 + wave_id * 0.2
         entity.max_hp = 10 + wave_id * 1
         entity.money = 20 + wave_id * 1
-        entity.color = {151, 188, 38}
+        entity.color = {206, 156, 58}
         entity.size = 10
 
         -- Blau (Tank)

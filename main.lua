@@ -34,12 +34,14 @@ end
 
 
 function love.load(arg)
-    playMusic("music")
+    -- playMusic("music")
 
     font = love.graphics.newFont("res/font.ttf", 14)
     love.graphics.setFont(font)
 
     big_font = love.graphics.newFont("res/font.ttf", 23)
+
+    img_star = love.graphics.newImage("res/star.png")
 
     background = love.graphics.newImage("res/background.png")
     load_field()
@@ -118,7 +120,7 @@ function love.draw()
         -- Feld zeichnen
 
         love.graphics.setScissor(field_start.x, field_start.y, field_width * field_size.x, field_height * field_size.y)
-        
+
         draw_field()
 
         -- Draw projectiles
@@ -127,16 +129,16 @@ function love.draw()
             projectile:draw()
         end
 
-        -- Draw Towers
-        for i = 1, #towers do
-            local tower = towers[i]
-            tower:draw()
-        end
-
         -- Draw entities
         for i = 1, #entities do
             local entity = entities[i]
             entity:draw()
+        end
+
+        -- Draw Towers
+        for i = 1, #towers do
+            local tower = towers[i]
+            tower:draw()
         end
 
         love.graphics.setScissor()

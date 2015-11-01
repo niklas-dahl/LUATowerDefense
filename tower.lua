@@ -13,8 +13,8 @@ function Tower.create()
     instance.target = nil
     instance.shoot_frequency = 0.3
     instance.last_shoot_time = 0.0
-    instance.shoot_speed = 1.0
-    instance.upgrade = 1
+    instance.shoot_speed = 2.0
+    instance.upgrade = 0
     instance.damage = 3
     return instance
 end
@@ -37,23 +37,46 @@ function Tower:shoot_projectile()
 end
 
 function Tower.draw_inner_shape(x, y, upgrade)
-    love.graphics.setColor(upgrade*10, 127-10*upgrade, 255-20*upgrade, 255)
+    big_ugprade = math.floor(upgrade / 7)
+    upgrade = upgrade % 7
+
+    local s = 4
+    -- love.graphics.rectangle("fill", x - 10 - s, y + 10 - s, 2*s + 20, s)
+    -- love.graphics.rectangle("fill", x - 10, y - 10 - s, s, 2*s + 20)
+    -- love.graphics.rectangle("fill", x + 10 - s, y - 10 - s, s, 2*s + 20)
+
+    love.graphics.setColor(0 + big_ugprade*30, 144-30*big_ugprade, 255-60*big_ugprade, 255)
     love.graphics.rectangle("fill", x - 10, y - 10, 20, 20)
-    love.graphics.setColor(0, 0, 0, 255)
+
+    love.graphics.setColor(30, 30, 30, 100)
+    love.graphics.circle("fill", x, y, 6, 20)
+
+
+    love.graphics.setColor(30,30,30, 255)
     love.graphics.rectangle("line", x - 11, y - 11, 22, 22)
+
+
+
 end
 
 function Tower.draw_shape(clstype, x, y, radius, upgrade, is_valid, selected)
 
     clstype.draw_inner_shape(x, y, upgrade)
 
-    local uoffsx = (upgrade-1) * 2
-
-    for i = 1, upgrade - 1 do
+    big_ugprade = math.floor(upgrade / 7)
+    upgrade = upgrade % 7
+    local uoffsx = (upgrade) * 2
+    for i = 1, upgrade do
 
         love.graphics.setColor(20, 20, 20, 255)
         love.graphics.rectangle("fill", x - uoffsx - 4 + 4 * i, y + field_size.y*0.4 - 4, 3, 3)
 
+    end
+
+
+    if big_ugprade > 0 then
+        love.graphics.setColor(255, 255, 255, 255)
+        love.graphics.draw(img_star, x - 8, y - 8)
     end
 
     if radius >= 0 then
