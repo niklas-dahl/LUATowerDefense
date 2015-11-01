@@ -73,6 +73,7 @@ end
 function love.keypressed(key, unicode)
     if key == "escape" then
         tower_under_cursor = nil
+        selected_tower = nil
     end
 end
 
