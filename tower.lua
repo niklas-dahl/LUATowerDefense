@@ -22,18 +22,29 @@ end
 
 function Tower:draw()
     local pos = self:get_pos()
-    self.draw_shape(pos.x, pos.y, self.radius, self.upgrade)
+    self.draw_shape(pos.x, pos.y, self.radius, self.upgrade, true)
 end
 
 
-function Tower.draw_shape(x, y, radius, upgrade)
+function Tower.draw_shape(x, y, radius, upgrade, is_valid)
+
     love.graphics.setColor(upgrade*10, 127-10*upgrade, 255-20*upgrade, 255)
 
     love.graphics.rectangle("fill", x - 10, y - 10, 20, 20)
 
     if radius >= 0 then
-        love.graphics.setColor(0, 127, 255, 70)
-        love.graphics.circle("line", x, y, radius, 80)  
+
+        if is_valid then
+            love.graphics.setColor(0, 127, 255, 150)
+            love.graphics.circle("line", x, y, radius, 80)  
+            love.graphics.setColor(0, 127, 255, 20)
+            love.graphics.circle("fill", x, y, radius, 80)  
+        else
+            love.graphics.setColor(255, 50, 0, 150)
+            love.graphics.circle("line", x, y, radius, 80)  
+            love.graphics.setColor(255, 50, 0, 50)
+            love.graphics.circle("fill", x, y, radius, 80)  
+        end
     end
 end
 

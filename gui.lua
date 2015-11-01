@@ -50,6 +50,21 @@ function check_button_actions()
     end
 end
 
+function can_place_tower_at(x, y)
+
+    local tile = get_field_at(Vector(x, y))
+
+    if tile ~= nil and get_field_data(tile) == 0 then
+        local tower = closest_tower(Vector(x, y))
+        if tower == nil or Vector.distance(tower:get_pos(), Vector(x, y)) > 30 then
+            return true
+        end
+    end
+
+    return false
+
+end
+
 
 function on_gui_click(x, y)
 
@@ -78,21 +93,15 @@ function on_gui_click(x, y)
 
         -- Neuen Tower platzieren
         if tower_under_cursor ~= nil and tower_under_cursor.cost <= player_money then
-            if x > field_start.x and y > field_start.x then
+            if can_place_tower_at(x, y) then
                 local rel_pos = Vector(x, y) - field_start
                 rel_pos = rel_pos / field_size + 0.5
-            -- if tile ~= nil then
-                -- local field_data = get_field_data(tile)
-                -- if field_data == 0 then
-                    local tower = tower_under_cursor.create()
-                    tower.field_pos = rel_pos
-                    print("TOWER POS = " .. tostring(rel_pos))
-                    table.insert(towers, tower)
-                    player_money = player_money - tower.cost
-                    -- tower_under_cursor = nil
-                    return
-                -- end
-            -- end
+                local tower = tower_under_cursor.create()
+                tower.field_pos = rel_pos
+                print("TOWER POS = " .. tostring(rel_pos))
+                table.insert(towers, tower)
+                player_money = player_money - tower.cost
+                return
             end
         end
 
@@ -146,7 +155,7 @@ function draw_gui()
     end
 
     if tower_under_cursor ~= nil then
-        tower_under_cursor.draw_shape(mouse.x, mouse.y, tower_under_cursor.radius, 1)
+        tower_under_cursor.draw_shape(mouse.x, mouse.y, tower_under_cursor.radius, 1, can_place_tower_at(mouse.x, mouse.y))
 
         if tower_under_cursor.cost > player_money then
             love.graphics.setColor(255, 0, 0, 255)

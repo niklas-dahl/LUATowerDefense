@@ -71,6 +71,25 @@ function love.keypressed(key, unicode)
     end
 end
 
+function closest_tower(pos)
+
+    local closest_dist = 100000.0
+    local closest = nil
+
+    for i = 1, #towers do
+        local tower = towers[i]
+        if tower ~= nil then
+            local dist = Vector.distance(pos, tower:get_pos())
+            if dist < closest_dist then
+                closest_dist = dist
+                closest = tower
+            end
+        end
+    end
+    return closest
+end
+
+
 
 
 
