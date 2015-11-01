@@ -25,7 +25,7 @@ function spawn_wave()
     local objs = {}
 
     for i = 1, 10+wave_id*wave_id do
-        
+
         local entity = Entity.create()
         entity.speed = 2.0 + wave_id * 0.3
         entity.max_hp = 10 + wave_id * 2
@@ -34,15 +34,15 @@ function spawn_wave()
         -- Blau (Tank)
         if i % math.max(0, 5 - wave_id) == 0 then
             entity.color = {255, 255, 100}
-            entity.max_hp = entity.max_hp * 2
+            entity.max_hp = entity.max_hp + 5
         end
 
         -- Boss (Tank)
         if i==1 and wave_id>0 then
             entity.color = {255, 100, 0}
-            entity.max_hp = entity.max_hp * 100
+            entity.max_hp = entity.max_hp * 10
             entity.speed = 2.0
-            entity.size = 30
+            entity.size = 10
         end
         
         entity.hp = entity.max_hp
