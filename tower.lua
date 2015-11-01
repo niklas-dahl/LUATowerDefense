@@ -86,7 +86,7 @@ function Tower:update()
     local new_target = closest_entity( pos )
     
     self.target = nil
-    local time_diff = love.timer.getTime() - self.last_shoot_time
+    local time_diff = (love.timer.getTime() - self.last_shoot_time) * time_factor
 
     if new_target ~= nil then
         local target_pos = new_target:get_pos()

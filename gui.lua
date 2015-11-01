@@ -4,9 +4,10 @@
 gui_pos = Vector(1100, 100)
 
 
-btn_start_wave = {["text"] = "Start wave", ["pos"] = Vector(gui_pos.x, 500), ["size"] = Vector(130, 40) }
-btn_cheat = {["text"] = "Cheat", ["pos"] = Vector(gui_pos.x, 550), ["size"] = Vector(130, 40) }
+btn_start_wave = {["text"] = "Start wave", ["pos"] = Vector(gui_pos.x, 500), ["size"] = Vector(150, 40) }
+btn_cheat = {["text"] = "Cheat", ["pos"] = Vector(gui_pos.x, 550), ["size"] = Vector(150, 40) }
 btn_upgrade = {["text"] = "Upgrade Tower", ["pos"] = Vector(900, 750), ["size"] = Vector(130, 40) }
+btn_fast_forward = {["text"] = "Enable Fast Forward", ["pos"] = Vector(gui_pos.x, 600), ["size"] = Vector(150, 40) }
 
 
 ctrl_towers = Vector(gui_pos.x, gui_pos.y + 200)
@@ -56,6 +57,20 @@ function check_button_actions()
     if is_btn_hovered(btn_upgrade) then
         if selected_tower ~= nil then
             selected_tower:do_upgrade()
+        end
+    end
+
+    -- BTN_FAST_FORWARD
+    if is_btn_hovered(btn_fast_forward) then
+
+        if fast_forward then
+            fast_forward = false
+            time_factor = 1.0
+            btn_fast_forward.text = "Enable Fast Forward"
+        else
+            fast_forward = true
+            time_factor = 4.0
+            btn_fast_forward.text = "Disable Fast Forward"
         end
     end
 
@@ -154,6 +169,7 @@ function draw_gui()
     end
 
     render_button(btn_cheat)
+    render_button(btn_fast_forward)
 
 
     -- draw tower types
@@ -213,8 +229,8 @@ function draw_gui()
             love.graphics.setColor(100, 255, 100, 255)
             love.graphics.print("Cost: " .. cost .. "$", 900, 730)  
         else
-            love.graphics.setColor(255, 100, 100, 255)
-            love.graphics.print("Can't afford upgrade!", 750, 750)  
+            love.graphics.setColor(255, 20, 20, 255)
+            love.graphics.print("Can't afford upgrade!", 800, 730)  
         end
 
 

@@ -35,6 +35,8 @@ player_money = 1000
 last_entity_spawned = 0.0
 tower_under_cursor = nil
 selected_tower = nil
+time_factor = 1.0
+fast_forward = false
 
 mouse = Vector(0, 0)
 
@@ -155,7 +157,7 @@ function love.update(dt)
 
     if simulation_running then 
         local any_entities_left = false
-        local diff = love.timer.getTime() - last_entity_spawned 
+        local diff = (love.timer.getTime() - last_entity_spawned) * time_factor
 
         -- Neuen Entity spawnen?
         if diff > wave_spawn_rate then
@@ -168,7 +170,7 @@ function love.update(dt)
         for i = 1, #entities do
             local entity = entities[i]
             if entity ~= nil then
-                entity:update(dt)
+                entity:update(dt * time_factor)
                 any_entities_left = true
                 if entity.destroyed then
                     table.remove(entities, i)
@@ -184,7 +186,7 @@ function love.update(dt)
         -- Projektile updaten
         for i = 1, #projectiles do
             local proj = projectiles[i]
-            if proj ~= nil and proj:update(dt) == false then
+            if proj ~= nil and proj:update(dt * time_factor) == false then
                 table.remove(projectiles, i)
             end
         end
@@ -192,7 +194,7 @@ function love.update(dt)
         -- Tower updaten
         for i = 1, #towers do
             local tower = towers[i]
-            tower:update(dt)
+            tower:update(dt * time_factor)
         end
         
         -- Evt. wave stoppen
