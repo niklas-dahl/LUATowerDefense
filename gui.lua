@@ -69,9 +69,11 @@ function check_button_actions()
     if is_btn_hovered(btn_upgrade) then
         if selected_tower ~= nil then
             if selected_tower:get_upgrade_cost() <= player_money then
-                player_money = player_money - selected_tower:get_upgrade_cost()
-                selected_tower:do_upgrade()
-                playSound("upgrade")
+                if selected_tower:can_upgrade() then
+                    player_money = player_money - selected_tower:get_upgrade_cost()
+                    selected_tower:do_upgrade()
+                    playSound("upgrade")
+                end
             end
         end
     end
@@ -159,8 +161,6 @@ function draw_gui()
 
     -- stats
 
-
-
     love.graphics.setFont(big_font)
     love.graphics.setColor(52, 201, 36, 255)
     love.graphics.print("Money: " .. player_money .. "$", 600, 40)
@@ -216,7 +216,7 @@ function draw_gui()
 
     if tower_under_cursor ~= nil then
         local could_place = can_place_tower_at(mouse.x, mouse.y) and tower_under_cursor.cost <= player_money
-        tower_under_cursor.draw_shape(tower_under_cursor, mouse.x, mouse.y, tower_under_cursor.radius, 0, could_place)
+        tower_under_cursor.draw_shape(tower_under_cursor, mouse.x, mouse.y, tower_under_cursor.radius, 0, could_place, true)
 
         if tower_under_cursor.cost > player_money then
             love.graphics.setColor(255, 0, 0, 255)
@@ -248,9 +248,15 @@ function draw_gui()
         local cost = selected_tower:get_upgrade_cost()
 
         if cost <= player_money then
-            render_button(btn_upgrade)
-            love.graphics.setColor(0, 100, 0, 255)
-            love.graphics.print("Cost: " .. cost .. "$", 850, 730)  
+                love.graphics.setColor(0, 100, 0, 255)
+                love.graphics.print("Cost: " .. cost .. "$", 850, 730)
+            if not selected_tower:can_upgrade() then
+                
+                love.graphics.setColor(0, 0, 100, 255)
+                love.graphics.print("No further upgrades!", 850, 750)
+            else
+                render_button(btn_upgrade)
+            end
         else
             love.graphics.setColor(255, 20, 20, 255)
             love.graphics.print("Cost: " .. cost .. "$", 850, 730)  

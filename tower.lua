@@ -13,9 +13,9 @@ function Tower.create()
     instance.target = nil
     instance.shoot_frequency = 0.3
     instance.last_shoot_time = 0.0
-    instance.shoot_speed = 2.0
+    instance.shoot_speed = 1.0
     instance.upgrade = 0
-    instance.damage = 3
+    instance.damage = 5
     return instance
 end
 
@@ -55,8 +55,6 @@ function Tower.draw_inner_shape(x, y, upgrade)
     love.graphics.setColor(30,30,30, 255)
     love.graphics.rectangle("line", x - 11, y - 11, 22, 22)
 
-
-
 end
 
 function Tower.draw_shape(clstype, x, y, radius, upgrade, is_valid, selected)
@@ -84,32 +82,35 @@ function Tower.draw_shape(clstype, x, y, radius, upgrade, is_valid, selected)
 
         if is_valid then
             if selected then
-                love.graphics.setColor(0, 127, 0, 150)
+                love.graphics.setColor(0, 160, 0, 150)
                 love.graphics.circle("line", x, y, radius, 80)  
-                love.graphics.setColor(0, 127, 0, 20)
+                love.graphics.setColor(0, 160, 0, 20)
                 love.graphics.circle("fill", x, y, radius, 80) 
             else
-                love.graphics.setColor(0, 127, 255, 70)
-                love.graphics.circle("line", x, y, radius, 80)  
-                love.graphics.setColor(0, 127, 255, 10)
-                love.graphics.circle("fill", x, y, radius, 80)  
+                -- love.graphics.setColor(0, 127, 255, 70)
+                -- love.graphics.circle("line", x, y, radius, 80)  
+                -- love.graphics.setColor(0, 127, 255, 10)
+                -- love.graphics.circle("fill", x, y, radius, 80)  
             end
         else
             love.graphics.setColor(255, 50, 0, 150)
             love.graphics.circle("line", x, y, radius, 80)  
-            love.graphics.setColor(255, 50, 0, 50)
+            love.graphics.setColor(255, 50, 0, 20)
             love.graphics.circle("fill", x, y, radius, 80)  
         end
     end
 end
 
 function Tower:do_upgrade()
-
     self.upgrade = self.upgrade + 1
     self.damage = self.damage + 1
-    self.radius = self.radius + 20
-    self.shoot_frequency = self.shoot_frequency * 0.9
+    self.radius = self.radius + 5
+    self.shoot_frequency = self.shoot_frequency * 0.95
 
+end
+
+function Tower:can_upgrade()
+    return self.upgrade < 14
 end
 
 function Tower:get_upgrade_cost()
@@ -130,16 +131,18 @@ function Tower:update()
     self.target = nil
     local time_diff = (love.timer.getTime() - self.last_shoot_time) * time_factor
 
-    if new_target ~= nil then
-        local target_pos = new_target:get_pos()
-        local dist = Vector.distance(target_pos, pos)
-        if dist < self.radius then
-            self.target = new_target
-            
-            if time_diff > self.shoot_frequency then
+    if self.shoot_frequency > 0 then
+        if new_target ~= nil then
+            local target_pos = new_target:get_pos()
+            local dist = Vector.distance(target_pos, pos)
+            if dist < self.radius then
+                self.target = new_target
+                
+                if time_diff > self.shoot_frequency then
 
-                self:shoot_projectile()
-                self.last_shoot_time = love.timer.getTime()
+                    self:shoot_projectile()
+                    self.last_shoot_time = love.timer.getTime()
+                end
             end
         end
     end

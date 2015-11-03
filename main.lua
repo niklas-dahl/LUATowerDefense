@@ -9,11 +9,13 @@ require "tower"
 require "gui"
 require "sound"
 require "laser_tower"
+require "freeze_tower"
 
 
 tower_types = {
     Tower,
-    LaserTower
+    LaserTower,
+    FreezeTower
 }
 
 
@@ -34,7 +36,7 @@ end
 
 
 function love.load(arg)
-    -- playMusic("music")
+    playMusic("music")
 
     font = love.graphics.newFont("res/font.ttf", 14)
     love.graphics.setFont(font)
@@ -44,6 +46,7 @@ function love.load(arg)
     img_star = love.graphics.newImage("res/star.png")
 
     background = love.graphics.newImage("res/background.png")
+    img_slow = love.graphics.newImage("res/slow.png")
     load_field()
 end
 

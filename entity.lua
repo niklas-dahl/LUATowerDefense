@@ -15,6 +15,7 @@ function Entity.create()
     instance.money = 20
     instance.color = {255, 100, 100}
     instance.size = 10
+    instance.slow_factor = 0.0
     return instance
 end
 
@@ -32,6 +33,10 @@ function Entity:draw()
     love.graphics.rectangle("line", pos.x - 10, hp_y, 20, 4)
     love.graphics.rectangle("fill", pos.x - 10, hp_y, 20 * pct_hp, 4)
 
+end
+
+function Entity:slow_by(amount)
+    self.slow_factor = math.max(amount, self.slow_factor)
 end
 
 function Entity:is_finished()
@@ -58,7 +63,9 @@ function Entity:update(dt)
 
     if true then
 
-        self.target_pct = self.target_pct + dt * self.speed
+        self.target_pct = self.target_pct + dt * self.speed * (1.0 - self.slow_factor)
+
+        self.slow_factor = self.slow_factor * (1.0 - dt)
 
         if self.target_pct > 1.0 then
             local old_x = self.field_pos.x

@@ -28,29 +28,29 @@ function spawn_wave()
 
         local entity = Entity.create()
         entity.speed = 2.0 + wave_id * 0.2
-        entity.max_hp = 10 + wave_id * 1
-        entity.money = 20 + wave_id * 1
+        entity.max_hp = 10 + wave_id * 2
+        entity.money = 15 + wave_id * 1
         entity.color = {206, 156, 58}
         entity.size = 10
 
         -- Blau (Tank)
         if i % 3 == 0 then
             entity.color = {47, 71, 196}
-            entity.max_hp = entity.max_hp + 5
+            entity.max_hp = entity.max_hp + 14
             entity.size = 13
-            entity.money = entity.money + 5
+            entity.money = entity.money + 2
         end
 
         -- Schnelle Einheiten
         if i % math.max(1, 10 - wave_id) == 0 then
             entity.speed = entity.speed + 0.5
-            entity.money = entity.money + 5
+            entity.money = entity.money + 2
         end
 
         -- Boss (Tank)
         if i % 10 == 9 and wave_id > 2 then
             entity.color = {180, 40, 67}
-            entity.max_hp = entity.max_hp * 10
+            entity.max_hp = entity.max_hp * 12
             entity.speed = 1.0
             entity.size = 17
             entity.money = entity.money + 15
