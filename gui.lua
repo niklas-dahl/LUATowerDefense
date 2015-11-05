@@ -7,7 +7,8 @@ btn_start_wave = {["text"] = "Start wave", ["pos"] = Vector(gui_pos.x, 560), ["s
 btn_fast_forward = {["text"] = "Enable Fast Forward", ["pos"] = Vector(gui_pos.x, 610), ["size"] = Vector(150, 40) }
 btn_cheat = {["text"] = "Cheat", ["pos"] = Vector(gui_pos.x, 830), ["size"] = Vector(150, 40) }
 btn_upgrade = {["text"] = "Upgrade Tower", ["pos"] = Vector(850, 750), ["size"] = Vector(130, 40) }
-btn_mute = {["text"] = "Mute", ["pos"] = Vector(gui_pos.x, 775), ["size"] = Vector(150, 40) }
+btn_mute = {["text"] = "Mute", ["pos"] = Vector(gui_pos.x, 775), ["size"] = Vector(64, 64), ["img"] = "res/mute.png", ["alt_img"] = "res/unmute.png", ["use_alt_img"] = true}
+--local data = love.image.newImageData("res/field.png")
 
 ctrl_towers = Vector(gui_pos.x, gui_pos.y + 130)
 
@@ -41,16 +42,28 @@ function render_button(btn)
         color = btn.color
     end
 
-    if is_btn_hovered(btn) then
-        love.graphics.setColor(color[1]*0.8, color[2]*0.8, color[3]*0.8, 255)
-    else
-        love.graphics.setColor(color[1], color[2], color[3], 255)
+    if btn.img == nil then
+        if is_btn_hovered(btn) then
+            love.graphics.setColor(color[1]*0.8, color[2]*0.8, color[3]*0.8, 255)
+        else
+            love.graphics.setColor(color[1], color[2], color[3], 255)
+        end
     end
 
+    if(btn.img == nil) then
+        love.graphics.rectangle("fill", btn.pos.x, btn.pos.y, btn.size.x, btn.size.y)
+        love.graphics.setColor(255, 255, 255, 255)
+        love.graphics.print(btn.text, btn.pos.x + btn.size.x / 2 - string.len(btn.text) * 3.4, btn.pos.y + btn.size.y / 2 - 7)
+    else
+        local img
+        if(btn.use_alt_img ~= nil and btn.use_alt_img) then
+            img = love.graphics.newImage(btn.alt_img)
+        else
+            img = love.graphics.newImage(btn.img)
+        end
 
-    love.graphics.rectangle("fill", btn.pos.x, btn.pos.y, btn.size.x, btn.size.y)
-    love.graphics.setColor(255, 255, 255, 255)
-    love.graphics.print(btn.text, btn.pos.x + btn.size.x / 2 - string.len(btn.text) * 3.4, btn.pos.y + btn.size.y / 2 - 7)
+        love.graphics.draw(img, btn.pos.x, btn.pos.y)
+    end
 end
 
 
@@ -102,6 +115,7 @@ function check_button_actions()
     -- BTN_MUTE
     if is_btn_hovered(btn_mute) then
         toggleMute()
+        btn_mute.use_alt_img = not mute
         if mute then
             btn_mute.text = "Unmute"
         else
