@@ -227,6 +227,7 @@ function draw_gui()
     -- buttons
     if not simulation_running then
         render_button(btn_start_wave)
+        render_button(btn_start_wave_new)
     end
 
     if magic then
@@ -236,7 +237,6 @@ function draw_gui()
     render_button(btn_fast_forward)
     render_button(btn_mute)
     render_button(btn_fast_forward_new)
-    render_button(btn_start_wave_new)
 
     -- draw tower types
     for f = 1, #tower_types do
