@@ -28,7 +28,7 @@ function spawn_wave()
 
         local entity = Entity.create()
         entity.speed = 2.0 + wave_id * 0.2
-        entity.max_hp = 10 + wave_id * 2
+        entity.max_hp = 10 + wave_id * 4
         entity.money = 15 + wave_id * 1
         entity.color = {206, 156, 58}
         entity.size = 10
@@ -36,7 +36,7 @@ function spawn_wave()
         -- Blau (Tank)
         if i % 3 == 0 then
             entity.color = {47, 71, 196}
-            entity.max_hp = entity.max_hp + 14
+            entity.max_hp = entity.max_hp + 2 * wave_id
             entity.size = 13
             entity.money = entity.money + 2
         end
@@ -67,9 +67,9 @@ end
 
 
 function start_wave()
-    tower_under_cursor = nil
+    -- tower_under_cursor = nil
     simulation_running = true
-    selected_tower = nil
+    -- selected_tower = nil
     entity_queue = spawn_wave()
     entities = {}
     projectiles = {}
@@ -84,4 +84,7 @@ function stop_wave()
     projectiles = {}
     entity_queue = {}
     simulation_running = false
+    if fast_forward then
+        start_wave()
+    end
 end
