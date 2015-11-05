@@ -33,8 +33,6 @@ function LaserTower.draw_inner_shape(x, y, upgrade)
 
 end
 
-
-
 function LaserTower:shoot_projectile()
     local proj = Tower.shoot_projectile(self)
     proj.laserProjectile = true
