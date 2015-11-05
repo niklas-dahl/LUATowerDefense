@@ -50,6 +50,7 @@ end
 
 
 function love.load(arg)
+
     playMusic("music")
 
     font = love.graphics.newFont("res/font.ttf", 14)

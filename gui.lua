@@ -1,5 +1,5 @@
 
-gui_pos = Vector(1100, 100)
+gui_pos = Vector(1080, 100)
 
 
 btn_cheat = {["text"] = "Cheat", ["pos"] = Vector(gui_pos.x, 830), ["size"] = Vector(150, 40) }
@@ -150,7 +150,7 @@ function can_place_tower_at(x, y)
 
     if tile ~= nil and get_field_data(tile) == 0 then
         local tower = closest_tower(Vector(x, y))
-        if tower == nil or Vector.distance(tower:get_pos(), Vector(x, y)) > math.sqrt(10*10 + 10*10) then
+        if tower == nil or Vector.distance(tower:get_pos(), Vector(x, y)) > 25 then
             return true
         end
     end
@@ -215,9 +215,9 @@ function draw_gui()
     love.graphics.setColor(52, 201, 36, 255)
     love.graphics.print("Money: " .. format_num(player_money,0,"$ "), 600, 40)
     love.graphics.setColor(187, 36, 201, 255)
-    love.graphics.print("Wave: " .. wave_id .. " / 50", 850, 40)
+    love.graphics.print("Wave: " .. wave_id .. " / 50", 840, 40)
     love.graphics.setColor(0, 144, 255, 255)
-    love.graphics.print("Lifes: " .. player_lifes, 1100, 40)
+    love.graphics.print("Lifes: " .. player_lifes, 1080, 40)
 
 
     love.graphics.setFont(font)

@@ -8,5 +8,7 @@ function love.conf(t)
     t.console = true
     t.window.vsync = false
 
+    t.window.icon = "res/icon.png"
+
 end
 
