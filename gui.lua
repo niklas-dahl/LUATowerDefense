@@ -52,16 +52,25 @@ function render_button(btn)
         end
     end
 
-    if(btn.img == nil) then
+    if btn.img == nil then
         love.graphics.rectangle("fill", btn.pos.x, btn.pos.y, btn.size.x, btn.size.y)
         love.graphics.setColor(255, 255, 255, 255)
         love.graphics.print(btn.text, btn.pos.x + btn.size.x / 2 - string.len(btn.text) * 3.4, btn.pos.y + btn.size.y / 2 - 7)
     else
         local img
         if(btn.use_alt_img ~= nil and btn.use_alt_img) then
-            img = love.graphics.newImage(btn.alt_img)
+
+            -- Load image only once
+            if type(btn.alt_img) == "string" then
+                btn.alt_img = love.graphics.newImage(btn.alt_img)
+            end
+            img = btn.alt_img
         else
-            img = love.graphics.newImage(btn.img)
+            -- Load image only once
+            if type(btn.img) == "string" then 
+                btn.img = love.graphics.newImage(btn.img)
+            end
+            img = btn.img
         end
 
         local width, height = img:getDimensions()
