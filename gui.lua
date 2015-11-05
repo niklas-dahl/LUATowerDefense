@@ -7,10 +7,10 @@ btn_start_wave = {["text"] = "Start wave", ["pos"] = Vector(gui_pos.x, 560), ["s
 btn_fast_forward = {["text"] = "Enable Fast Forward", ["pos"] = Vector(gui_pos.x, 610), ["size"] = Vector(150, 40) }
 btn_cheat = {["text"] = "Cheat", ["pos"] = Vector(gui_pos.x, 830), ["size"] = Vector(150, 40) }
 btn_upgrade = {["text"] = "Upgrade Tower", ["pos"] = Vector(850, 750), ["size"] = Vector(130, 40) }
-btn_mute = {["text"] = "Mute", ["pos"] = Vector(gui_pos.x+80, 830), ["size"] = Vector(64, 64), ["img"] = "res/mute.png", ["alt_img"] = "res/unmute.png", ["use_alt_img"] = true}
-btn_fast_forward_new = {["pos"] = Vector(gui_pos.x, 740), ["size"] = Vector(127, 80), ["img"] = "res/fast_forward.png", ["alt_img"] = "res/normal_speed.png", ["use_alt_img"] = false}
-btn_start_wave_new = {["pos"] = Vector(gui_pos.x, 655), ["size"] = Vector(127, 80), ["img"] = "res/start_wave.png"}
---local data = love.image.newImageData("res/field.png")
+btn_mute = {["text"] = "Mute", ["pos"] = Vector(gui_pos.x+120, 38), ["size"] = Vector(32, 32), ["img"] = "res/mute.png", ["alt_img"] = "res/unmute.png", ["use_alt_img"] = true}
+btn_start_wave_new = {["pos"] = Vector(gui_pos.x, 550), ["size"] = Vector(64, 64), ["img"] = "res/start_wave.png"}
+btn_fast_forward_new = {["pos"] = Vector(gui_pos.x + 80, 550), ["size"] = Vector(64, 64), ["img"] = "res/fast_forward.png", ["alt_img"] = "res/normal_speed.png", ["use_alt_img"] = false}
+
 
 ctrl_towers = Vector(gui_pos.x, gui_pos.y + 130)
 
@@ -36,20 +36,27 @@ end
 
 
 
-function render_button(btn)
+function render_button(btn, disabled)
         
     local color = {60, 60, 60, 255}
+    local hovered = is_btn_hovered(btn)
 
     if btn.color ~= nil then
         color = btn.color
     end
 
-    if btn.img == nil then
-        if is_btn_hovered(btn) then
-            love.graphics.setColor(color[1]*0.8, color[2]*0.8, color[3]*0.8, 255)
-        else
-            love.graphics.setColor(color[1], color[2], color[3], 255)
-        end
+    -- if btn.img == nil then
+    if hovered then
+        love.graphics.setColor(color[1]*0.8, color[2]*0.8, color[3]*0.8, 150)
+    else
+        love.graphics.setColor(color[1], color[2], color[3], 255)
+    end
+    -- end
+
+
+
+    if disabled then
+        love.graphics.setColor(20, 20, 20, 40)
     end
 
     if btn.img == nil then
@@ -233,16 +240,17 @@ function draw_gui()
 
 
     -- buttons
+    -- render_button(btn_start_wave, simulation_running)
+    render_button(btn_start_wave_new, simulation_running)
+    
     if not simulation_running then
-        render_button(btn_start_wave)
-        render_button(btn_start_wave_new)
     end
 
     if magic then
         render_button(btn_cheat)
     end
 
-    render_button(btn_fast_forward)
+    -- render_button(btn_fast_forward)
     render_button(btn_mute)
     render_button(btn_fast_forward_new)
 
