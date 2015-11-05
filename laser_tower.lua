@@ -34,6 +34,11 @@ end
 function LaserTower:shoot_projectile()
     local proj = Tower.shoot_projectile(self)
     proj.laserProjectile = true
+
+    local dir = self.target:get_pos() - self:get_pos()
+    dir = dir / dir:len()
+    proj.pos = proj.pos + dir * 20
+
     return proj
 end
 

@@ -56,7 +56,7 @@ function DirectedProjectile:draw()
                 direction = direction / (1 - direction:len())
             end
 
-            direction = direction * 50 * self.speed
+            direction = direction * 25
 
             love.graphics.setColor(255, 0, 0, 150)
             love.graphics.setLineWidth(3)

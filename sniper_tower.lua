@@ -18,7 +18,6 @@ end
 
 
 function SniperTower:shoot_projectile()
-    print("Shoot line projectile")
     local proj = LineProjectile.create()
     proj.target_pos = self.target:get_pos()
     proj.start_pos = self:get_pos()
