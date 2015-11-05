@@ -4,14 +4,12 @@
 gui_pos = Vector(1100, 100)
 
 
-btn_start_wave = {["text"] = "Start wave", ["pos"] = Vector(gui_pos.x, 500), ["size"] = Vector(150, 40) }
+btn_start_wave = {["text"] = "Start wave", ["pos"] = Vector(gui_pos.x, 560), ["size"] = Vector(150, 40), ["color"] = {80, 200, 80} }
+btn_fast_forward = {["text"] = "Enable Fast Forward", ["pos"] = Vector(gui_pos.x, 610), ["size"] = Vector(150, 40) }
 btn_cheat = {["text"] = "Cheat", ["pos"] = Vector(gui_pos.x, 830), ["size"] = Vector(150, 40) }
 btn_upgrade = {["text"] = "Upgrade Tower", ["pos"] = Vector(850, 750), ["size"] = Vector(130, 40) }
-btn_fast_forward = {["text"] = "Enable Fast Forward", ["pos"] = Vector(gui_pos.x, 550), ["size"] = Vector(150, 40) }
-btn_fast_forward = {["text"] = "Enable Fast Forward", ["pos"] = Vector(gui_pos.x, 550), ["size"] = Vector(150, 40) }
 
-
-ctrl_towers = Vector(gui_pos.x, gui_pos.y + 200)
+ctrl_towers = Vector(gui_pos.x, gui_pos.y + 130)
 
 
 function is_hovered(pos, size)
@@ -36,13 +34,22 @@ end
 
 
 function render_button(btn)
-    if is_btn_hovered(btn) then
-        love.graphics.setColor(60, 60, 60, 255)
-    else
-        love.graphics.setColor(40, 40, 40, 255)
+        
+    local color = {60, 60, 60, 255}
+
+    if btn.color ~= nil then
+        color = btn.color
     end
+
+    if is_btn_hovered(btn) then
+        love.graphics.setColor(color[1]*0.8, color[2]*0.8, color[3]*0.8, 255)
+    else
+        love.graphics.setColor(color[1], color[2], color[3], 255)
+    end
+
+
     love.graphics.rectangle("fill", btn.pos.x, btn.pos.y, btn.size.x, btn.size.y)
-    love.graphics.setColor(200, 200, 200, 255)
+    love.graphics.setColor(255, 255, 255, 255)
     love.graphics.print(btn.text, btn.pos.x + btn.size.x / 2 - string.len(btn.text) * 3.4, btn.pos.y + btn.size.y / 2 - 7)
 end
 
@@ -60,7 +67,7 @@ function check_button_actions()
     end
 
     -- BTN_CHEAT
-    if is_btn_hovered(btn_cheat) then
+    if magic and is_btn_hovered(btn_cheat) then
         player_money = player_money*2 + 100000000
     end
 
@@ -186,7 +193,10 @@ function draw_gui()
         render_button(btn_start_wave)
     end
 
-    render_button(btn_cheat)
+    if magic then
+        render_button(btn_cheat)
+    end
+
     render_button(btn_fast_forward)
 
 

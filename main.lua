@@ -4,17 +4,20 @@ require "globals"
 require "field"
 require "entity"
 require "directed_projectile"
+require "line_projectile"
 require "entities"
 require "tower"
 require "gui"
 require "sound"
 require "laser_tower"
 require "freeze_tower"
+require "sniper_tower"
 
 
 tower_types = {
     Tower,
     FreezeTower,
+    SniperTower,
     LaserTower
 }
 
@@ -23,6 +26,10 @@ function love.keypressed(key, unicode)
     if key == "escape" then
         tower_under_cursor = nil
         selected_tower = nil
+    end
+
+    if key == "f9" then
+        magic = true
     end
 end
 

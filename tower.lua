@@ -12,8 +12,8 @@ function Tower.create()
     instance.field_pos = Vector(2, 2)
     instance.target = nil
     instance.shoot_frequency = 0.3
-    instance.last_shoot_time = 0.0
     instance.shoot_speed = 1.0
+    instance.last_shoot_time = 0.0
     instance.upgrade = 0
     instance.damage = 5
     return instance
@@ -32,7 +32,6 @@ function Tower:shoot_projectile()
     proj.speed = self.shoot_speed
     proj.damage = self.damage
     proj.pos = self:get_pos()
-    table.insert(projectiles, proj)
     return proj
 end
 
@@ -77,7 +76,7 @@ function Tower.draw_shape(clstype, x, y, radius, upgrade, is_valid, selected)
         love.graphics.draw(img_star, x - 8, y - 8)
     end
 
-    if radius >= 0 then
+    if radius >= 0 and radius < 5000 then
 
 
         if is_valid then

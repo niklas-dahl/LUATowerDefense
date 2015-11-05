@@ -26,8 +26,6 @@ function LaserTower.draw_inner_shape(x, y, upgrade)
     love.graphics.line(x - 5, y - 5, x + 5, y + 5)
     love.graphics.line(x + 5, y - 5, x - 5, y + 5)
 
-
-
     love.graphics.setColor(30,30,30, 255)
     love.graphics.rectangle("line", x - 11, y - 11, 22, 22)
 

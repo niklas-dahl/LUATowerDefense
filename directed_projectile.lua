@@ -12,6 +12,8 @@ function DirectedProjectile.create()
     instance.speed = 0.5
     instance.damage = 1
     instance.laserProjectile = false
+    instance.lineProjectile = false
+    table.insert(projectiles, instance)
     return instance
 end
 
@@ -45,13 +47,24 @@ end
 function DirectedProjectile:draw()
     if(self.laserProjectile) then
         local target_pos = self.target:get_pos()
-        local direction = target_pos - self.pos
-        direction = direction / direction:len() * 22
+        
 
-        love.graphics.setColor(255, 0, 0, 150)
-        love.graphics.setLineWidth(3)
-        love.graphics.line(self.pos.x, self.pos.y, self.pos.x + direction.x, self.pos.y + direction.y)
-        love.graphics.setLineWidth(1)
+        if not self.lineProjectile then
+            local direction = target_pos - self.pos
+
+            if direction:len() > 1 then
+                direction = direction / (1 - direction:len())
+            end
+
+            direction = direction * 50 * self.speed
+
+            love.graphics.setColor(255, 0, 0, 150)
+            love.graphics.setLineWidth(3)
+            love.graphics.line(self.pos.x, self.pos.y, self.pos.x + direction.x, self.pos.y + direction.y)
+            love.graphics.setLineWidth(1)
+        else
+
+        end
     else
         love.graphics.setColor(0, 0, 0, 150)
         love.graphics.circle("fill", self.pos.x, self.pos.y, 3, 10)

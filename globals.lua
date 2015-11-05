@@ -22,3 +22,4 @@ selected_tower = nil
 time_factor = 1.0
 fast_forward = false
 mouse = Vector(0, 0)
+magic = false
