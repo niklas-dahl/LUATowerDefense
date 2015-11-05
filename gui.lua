@@ -157,7 +157,7 @@ function can_place_tower_at(x, y)
 
     if tile ~= nil and get_field_data(tile) == 0 then
         local tower = closest_tower(Vector(x, y))
-        if tower == nil or Vector.distance(tower:get_pos(), Vector(x, y)) > 30 then
+        if tower == nil or Vector.distance(tower:get_pos(), Vector(x, y)) > math.sqrt(10*10 + 10*10) then
             return true
         end
     end
@@ -201,7 +201,7 @@ function on_gui_click(x, y)
     if tower_under_cursor == nil then
 
         local tower = closest_tower(Vector(x, y))
-        if tower ~= nil and Vector.distance(tower:get_pos(), Vector(x, y)) < 30 then
+        if tower ~= nil and Vector.distance(tower:get_pos(), Vector(x, y)) < math.sqrt(10*10 + 10*10) then
             selected_tower = tower
         end
     end
@@ -330,5 +330,7 @@ function draw_gui()
 
     end
 
+
+    love.graphics.print("FPS: " .. love.timer.getFPS(), love.graphics.getWidth() - 80, love.graphics.getHeight() - 35)
 
 end

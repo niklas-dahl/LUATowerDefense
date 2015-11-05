@@ -70,7 +70,7 @@ function draw_field()
             elseif obj == 2 then
                 -- Ziel
                 love.graphics.setColor(20, 20, 20, 255)
-                love.graphics.print("GOAL", offs.x + 8, offs.y + 20)
+                love.graphics.print("END", offs.x + 10, offs.y + 20)
                 love.graphics.setColor(0, 0, 0, 100)
             
             elseif obj == 0 then
