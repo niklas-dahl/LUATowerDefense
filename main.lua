@@ -1,4 +1,5 @@
 
+require "util"
 require "vector"
 require "number_format"
 require "globals"

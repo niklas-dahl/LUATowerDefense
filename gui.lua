@@ -2,8 +2,6 @@
 gui_pos = Vector(1100, 100)
 
 
-btn_start_wave = {["text"] = "Start wave", ["pos"] = Vector(gui_pos.x, 560), ["size"] = Vector(150, 40), ["color"] = {80, 200, 80} }
-btn_fast_forward = {["text"] = "Enable Fast Forward", ["pos"] = Vector(gui_pos.x, 610), ["size"] = Vector(150, 40) }
 btn_cheat = {["text"] = "Cheat", ["pos"] = Vector(gui_pos.x, 830), ["size"] = Vector(150, 40) }
 btn_upgrade = {["text"] = "Upgrade Tower", ["pos"] = Vector(850, 750), ["size"] = Vector(130, 40) }
 btn_mute = {["text"] = "Mute", ["pos"] = Vector(gui_pos.x+120, 38), ["size"] = Vector(32, 32), ["img"] = "res/mute.png", ["alt_img"] = "res/unmute.png", ["use_alt_img"] = true}
@@ -55,7 +53,7 @@ function render_button(btn, disabled)
 
 
     if disabled then
-        love.graphics.setColor(20, 20, 20, 40)
+        love.graphics.setColor(20, 20, 20, 25)
     end
 
     if btn.img == nil then
@@ -89,7 +87,7 @@ end
 function check_button_actions()
 
     -- BTN_START_WAVE
-    if is_btn_hovered(btn_start_wave) or is_btn_hovered(btn_start_wave_new) then
+    if is_btn_hovered(btn_start_wave_new) then
         if not simulation_running then
             start_wave()
             return
@@ -116,25 +114,20 @@ function check_button_actions()
     end
 
     -- BTN_FAST_FORWARD
-    if is_btn_hovered(btn_fast_forward) then
+    if is_btn_hovered(btn_fast_forward_new) then
 
         if fast_forward then
             fast_forward = false
             time_factor = 1.0
-            btn_fast_forward.text = "Enable Fast Forward"
+            btn_fast_forward_new.use_alt_img = false
+
+            -- btn_fast_forward.text = "Enable Fast Forward"
         else
             fast_forward = true
             time_factor = 4.0
-            btn_fast_forward.text = "Disable Fast Forward"
+            btn_fast_forward_new.use_alt_img = true
+            -- btn_fast_forward.text = "Disable Fast Forward"
         end
-    end
-
-    if(is_btn_hovered(btn_fast_forward_new)) then
-        fast_forward = not fast_forward
-        if fast_forward then time_factor = 4.0 end
-        if not fast_forward then time_factor = 1.0 end
-
-        btn_fast_forward_new.use_alt_img = fast_forward
     end
 
     -- BTN_MUTE
@@ -220,7 +213,7 @@ function draw_gui()
 
     love.graphics.setFont(big_font)
     love.graphics.setColor(52, 201, 36, 255)
-    love.graphics.print("Money: " .. format_num(player_money,-2,"$ "), 600, 40)
+    love.graphics.print("Money: " .. format_num(player_money,0,"$ "), 600, 40)
     love.graphics.setColor(187, 36, 201, 255)
     love.graphics.print("Wave: " .. wave_id .. " / 50", 850, 40)
     love.graphics.setColor(0, 144, 255, 255)
@@ -252,6 +245,19 @@ function draw_gui()
     -- render_button(btn_fast_forward)
     render_button(btn_mute)
     render_button(btn_fast_forward_new)
+
+    -- Draw fast forward display
+    if fast_forward then
+        local fade_time = 2.0
+        local opacity = love.timer.getTime() % fade_time
+        local ff_top = 620
+        opacity = math.min(opacity, fade_time - opacity) / fade_time
+        love.graphics.setColor(50, 200, 50, 255 * opacity)
+        rounded_rect(gui_pos.x, ff_top, 150, 30, 5)
+        love.graphics.setColor(0, 0, 0, 255 * opacity)
+        love.graphics.print("FAST FORWARD", gui_pos.x + 25, ff_top + 8)
+
+    end
 
     -- draw tower types
     for f = 1, #tower_types do
