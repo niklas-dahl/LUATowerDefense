@@ -7,7 +7,9 @@ btn_start_wave = {["text"] = "Start wave", ["pos"] = Vector(gui_pos.x, 560), ["s
 btn_fast_forward = {["text"] = "Enable Fast Forward", ["pos"] = Vector(gui_pos.x, 610), ["size"] = Vector(150, 40) }
 btn_cheat = {["text"] = "Cheat", ["pos"] = Vector(gui_pos.x, 830), ["size"] = Vector(150, 40) }
 btn_upgrade = {["text"] = "Upgrade Tower", ["pos"] = Vector(850, 750), ["size"] = Vector(130, 40) }
-btn_mute = {["text"] = "Mute", ["pos"] = Vector(gui_pos.x, 775), ["size"] = Vector(64, 64), ["img"] = "res/mute.png", ["alt_img"] = "res/unmute.png", ["use_alt_img"] = true}
+btn_mute = {["text"] = "Mute", ["pos"] = Vector(gui_pos.x+80, 830), ["size"] = Vector(64, 64), ["img"] = "res/mute.png", ["alt_img"] = "res/unmute.png", ["use_alt_img"] = true}
+btn_fast_forward_new = {["pos"] = Vector(gui_pos.x, 740), ["size"] = Vector(127, 80), ["img"] = "newres/unpressed/blue/forward.png", ["alt_img"] = "newres/pressed/blue/forward.png", ["use_alt_img"] = false}
+btn_start_wave_new = {["pos"] = Vector(gui_pos.x, 655), ["size"] = Vector(127, 80), ["img"] = "newres/unpressed/blue/play.png", ["alt_img"] = "newres/pressed/blue/play.png", ["use_alt_img"] = false}
 --local data = love.image.newImageData("res/field.png")
 
 ctrl_towers = Vector(gui_pos.x, gui_pos.y + 130)
@@ -62,7 +64,8 @@ function render_button(btn)
             img = love.graphics.newImage(btn.img)
         end
 
-        love.graphics.draw(img, btn.pos.x, btn.pos.y)
+        local width, height = img:getDimensions()
+        love.graphics.draw(img, btn.pos.x, btn.pos.y, 0, btn.size.x/width, btn.size.y/height)
     end
 end
 
@@ -72,7 +75,7 @@ end
 function check_button_actions()
 
     -- BTN_START_WAVE
-    if is_btn_hovered(btn_start_wave) then
+    if is_btn_hovered(btn_start_wave) or is_btn_hovered(btn_start_wave_new) then
         if not simulation_running then
             start_wave()
             return
@@ -112,6 +115,14 @@ function check_button_actions()
         end
     end
 
+    if(is_btn_hovered(btn_fast_forward_new)) then
+        fast_forward = not fast_forward
+        if fast_forward then time_factor = 4.0 end
+        if not fast_forward then time_factor = 1.0 end
+
+        btn_fast_forward_new.use_alt_img = fast_forward
+    end
+
     -- BTN_MUTE
     if is_btn_hovered(btn_mute) then
         toggleMute()
@@ -122,6 +133,7 @@ function check_button_actions()
             btn_mute.text = "Mute"
         end
     end
+
 
 end
 
@@ -223,6 +235,8 @@ function draw_gui()
 
     render_button(btn_fast_forward)
     render_button(btn_mute)
+    render_button(btn_fast_forward_new)
+    render_button(btn_start_wave_new)
 
     -- draw tower types
     for f = 1, #tower_types do
