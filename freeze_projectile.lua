@@ -12,6 +12,7 @@ function FreezeProjectile.create()
     instance.damage = 0
     instance.pct = 0
     instance.radius = 100
+    table.insert(projectiles, instance)
     return instance
 end
 

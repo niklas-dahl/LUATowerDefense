@@ -36,7 +36,7 @@ function Tower:shoot_projectile()
 end
 
 function Tower.draw_inner_shape(x, y, upgrade)
-    big_ugprade = math.floor(upgrade / 7)
+    big_upgrade = math.floor(upgrade / 7)
     upgrade = upgrade % 7
 
     local s = 4
@@ -44,14 +44,13 @@ function Tower.draw_inner_shape(x, y, upgrade)
     -- love.graphics.rectangle("fill", x - 10, y - 10 - s, s, 2*s + 20)
     -- love.graphics.rectangle("fill", x + 10 - s, y - 10 - s, s, 2*s + 20)
 
-    love.graphics.setColor(0 + big_ugprade*30, 144-30*big_ugprade, 255-60*big_ugprade, 255)
+    love.graphics.setColor(255, 0, 144, 255)
     love.graphics.rectangle("fill", x - 10, y - 10, 20, 20)
 
     love.graphics.setColor(30, 30, 30, 100)
     love.graphics.circle("fill", x, y, 6, 20)
 
-
-    love.graphics.setColor(30,30,30, 255)
+    love.graphics.setColor(30, 30, 30, 255)
     love.graphics.rectangle("line", x - 11, y - 11, 22, 22)
 
 end
@@ -60,20 +59,30 @@ function Tower.draw_shape(clstype, x, y, radius, upgrade, is_valid, selected)
 
     clstype.draw_inner_shape(x, y, upgrade)
 
-    big_ugprade = math.floor(upgrade / 7)
+    big_upgrade = math.floor(upgrade / 7)
     upgrade = upgrade % 7
     local uoffsx = (upgrade) * 2
+
+    for i = 1, big_upgrade do
+        for k = 1, 7 do
+            love.graphics.setColor(20, 80, 20, 255)
+            love.graphics.rectangle("fill", x - 18 + 4 * k, y + field_size.y*0.4 - 4 + (i-1) * 6, 3, 3)
+        end
+    end
+
+    local uoffsy = big_upgrade * 6
+
     for i = 1, upgrade do
-
         love.graphics.setColor(20, 20, 20, 255)
-        love.graphics.rectangle("fill", x - uoffsx - 4 + 4 * i, y + field_size.y*0.4 - 4, 3, 3)
-
+        love.graphics.rectangle("fill", x - uoffsx - 4 + 4 * i, y + field_size.y*0.4 - 4 + uoffsy, 3, 3)
     end
 
 
-    if big_ugprade > 0 then
-        love.graphics.setColor(255, 255, 255, 255)
-        love.graphics.draw(img_star, x - 8, y - 8)
+
+
+    if big_upgrade > 0 then
+        -- love.graphics.setColor(255, 255, 255, 255)
+        -- love.graphics.draw(img_star, x - 8, y - 8)
     end
 
     if radius >= 0 and radius < 5000 then
@@ -109,7 +118,7 @@ function Tower:do_upgrade()
 end
 
 function Tower:can_upgrade()
-    return self.upgrade < 14
+    return self.upgrade < 21
 end
 
 function Tower:get_upgrade_cost()

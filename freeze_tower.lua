@@ -16,13 +16,18 @@ function FreezeTower:shoot_projectile()
     proj.damage = 0
     proj.pos = self:get_pos()
     proj.radius = self.radius
-    table.insert(projectiles, proj)
+    return proj
 end
 
 function FreezeTower:create()
     local instance = {}
     setmetatable(instance, FreezeTower)
     return instance
+end
+
+function FreezeTower:do_upgrade()
+    Tower.do_upgrade(self)
+    self.damage = 0
 end
 
 function FreezeTower.draw_inner_shape(x, y, upgrade)
