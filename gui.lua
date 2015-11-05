@@ -1,5 +1,4 @@
-
-
+require "sound"
 
 gui_pos = Vector(1100, 100)
 
@@ -8,6 +7,7 @@ btn_start_wave = {["text"] = "Start wave", ["pos"] = Vector(gui_pos.x, 560), ["s
 btn_fast_forward = {["text"] = "Enable Fast Forward", ["pos"] = Vector(gui_pos.x, 610), ["size"] = Vector(150, 40) }
 btn_cheat = {["text"] = "Cheat", ["pos"] = Vector(gui_pos.x, 830), ["size"] = Vector(150, 40) }
 btn_upgrade = {["text"] = "Upgrade Tower", ["pos"] = Vector(850, 750), ["size"] = Vector(130, 40) }
+btn_mute = {["text"] = "Mute", ["pos"] = Vector(gui_pos.x, 775), ["size"] = Vector(150, 40) }
 
 ctrl_towers = Vector(gui_pos.x, gui_pos.y + 130)
 
@@ -96,6 +96,16 @@ function check_button_actions()
             fast_forward = true
             time_factor = 4.0
             btn_fast_forward.text = "Disable Fast Forward"
+        end
+    end
+
+    -- BTN_MUTE
+    if is_btn_hovered(btn_mute) then
+        toggleMute()
+        if mute then
+            btn_mute.text = "Unmute"
+        else
+            btn_mute.text = "Mute"
         end
     end
 
@@ -198,7 +208,7 @@ function draw_gui()
     end
 
     render_button(btn_fast_forward)
-
+    render_button(btn_mute)
 
     -- draw tower types
     for f = 1, #tower_types do

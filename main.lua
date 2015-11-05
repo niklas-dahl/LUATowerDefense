@@ -28,6 +28,10 @@ function love.keypressed(key, unicode)
         selected_tower = nil
     end
 
+    if key == "m" then
+        toggleMute()
+    end
+
     if key == "f9" then
         magic = true
     end
