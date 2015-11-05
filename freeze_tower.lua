@@ -1,5 +1,4 @@
 
-require "freeze_projectile"
 
 FreezeTower = Tower.create()
 FreezeTower.__index = FreezeTower

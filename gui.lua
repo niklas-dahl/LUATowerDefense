@@ -1,4 +1,3 @@
-require "sound"
 
 gui_pos = Vector(1100, 100)
 
@@ -221,7 +220,7 @@ function draw_gui()
 
     love.graphics.setFont(big_font)
     love.graphics.setColor(52, 201, 36, 255)
-    love.graphics.print("Money: " .. player_money .. "$", 600, 40)
+    love.graphics.print("Money: " .. format_num(player_money,-2,"$ "), 600, 40)
     love.graphics.setColor(187, 36, 201, 255)
     love.graphics.print("Wave: " .. wave_id .. " / 50", 850, 40)
     love.graphics.setColor(0, 144, 255, 255)

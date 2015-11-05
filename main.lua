@@ -1,10 +1,12 @@
 
 require "vector"
+require "number_format"
 require "globals"
 require "field"
 require "entity"
 require "directed_projectile"
 require "line_projectile"
+require "freeze_projectile"
 require "entities"
 require "tower"
 require "gui"
