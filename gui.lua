@@ -8,8 +8,8 @@ btn_fast_forward = {["text"] = "Enable Fast Forward", ["pos"] = Vector(gui_pos.x
 btn_cheat = {["text"] = "Cheat", ["pos"] = Vector(gui_pos.x, 830), ["size"] = Vector(150, 40) }
 btn_upgrade = {["text"] = "Upgrade Tower", ["pos"] = Vector(850, 750), ["size"] = Vector(130, 40) }
 btn_mute = {["text"] = "Mute", ["pos"] = Vector(gui_pos.x+80, 830), ["size"] = Vector(64, 64), ["img"] = "res/mute.png", ["alt_img"] = "res/unmute.png", ["use_alt_img"] = true}
-btn_fast_forward_new = {["pos"] = Vector(gui_pos.x, 740), ["size"] = Vector(127, 80), ["img"] = "newres/unpressed/blue/forward.png", ["alt_img"] = "newres/pressed/blue/forward.png", ["use_alt_img"] = false}
-btn_start_wave_new = {["pos"] = Vector(gui_pos.x, 655), ["size"] = Vector(127, 80), ["img"] = "newres/unpressed/blue/play.png", ["alt_img"] = "newres/pressed/blue/play.png", ["use_alt_img"] = false}
+btn_fast_forward_new = {["pos"] = Vector(gui_pos.x, 740), ["size"] = Vector(127, 80), ["img"] = "res/fast_forward.png", ["alt_img"] = "res/normal_speed.png", ["use_alt_img"] = false}
+btn_start_wave_new = {["pos"] = Vector(gui_pos.x, 655), ["size"] = Vector(127, 80), ["img"] = "res/start_wave.png"}
 --local data = love.image.newImageData("res/field.png")
 
 ctrl_towers = Vector(gui_pos.x, gui_pos.y + 130)
@@ -73,8 +73,7 @@ function render_button(btn)
             img = btn.img
         end
 
-        local width, height = img:getDimensions()
-        love.graphics.draw(img, btn.pos.x, btn.pos.y, 0, btn.size.x/width, btn.size.y/height)
+        love.graphics.draw(img, btn.pos.x, btn.pos.y)
     end
 end
 
