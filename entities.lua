@@ -38,13 +38,12 @@ function spawn_wave()
             entity.color = {47, 71, 196}
             entity.max_hp = entity.max_hp + 2 * wave_id
             entity.size = 13
-            entity.money = entity.money + 2
+            entity.money = entity.money + 1
         end
 
         -- Schnelle Einheiten
         if i % math.max(1, 10 - wave_id) == 0 then
             entity.speed = entity.speed + 0.5
-            entity.money = entity.money + 2
         end
 
         -- Boss (Tank)
@@ -53,7 +52,7 @@ function spawn_wave()
             entity.max_hp = entity.max_hp * 12
             entity.speed = 1.0
             entity.size = 17
-            entity.money = entity.money + 15
+            entity.money = entity.money + 5
         end
         
         entity.hp = entity.max_hp

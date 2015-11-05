@@ -14,8 +14,8 @@ require "freeze_tower"
 
 tower_types = {
     Tower,
-    LaserTower,
-    FreezeTower
+    FreezeTower,
+    LaserTower
 }
 
 
@@ -42,6 +42,7 @@ function love.load(arg)
     love.graphics.setFont(font)
 
     big_font = love.graphics.newFont("res/font.ttf", 23)
+    very_big_font = love.graphics.newFont("res/font.ttf", 45)
 
     img_star = love.graphics.newImage("res/star.png")
 
@@ -155,7 +156,9 @@ function love.draw()
         love.graphics.setColor(128, 10, 10, 200)
         love.graphics.rectangle("fill", 0, 0, 10000, 10000)
         love.graphics.setColor(255, 255, 255, 255)
-        love.graphics.print("GAME OVER!", 100, 100)
+        love.graphics.setFont(very_big_font)
+        love.graphics.print("GAME OVER!", love.graphics.getWidth() / 2 - 120, love.graphics.getHeight() / 2 - 30)
+        love.graphics.setFont(font)
     end
 
 end

@@ -53,12 +53,20 @@ function draw_field()
             hovered = false
 
             if obj == 1 then
+                
+                -- Start
+                if x == start_pos.x and y == start_pos.y then
+                    love.graphics.setColor(20, 20, 20, 255)
+                    love.graphics.print("START", offs.x + 4, offs.y + 20)
+                
+                end
+            
                 -- Strecke
                 love.graphics.setColor(0, 0, 0, 100)
                 if hovered then
                     love.graphics.setColor(100, 0, 0, 100)
                 end
-            
+
             elseif obj == 2 then
                 -- Ziel
                 love.graphics.setColor(20, 20, 20, 255)

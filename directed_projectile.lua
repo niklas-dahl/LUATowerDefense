@@ -46,10 +46,12 @@ function DirectedProjectile:draw()
     if(self.laserProjectile) then
         local target_pos = self.target:get_pos()
         local direction = target_pos - self.pos
-        direction = direction / direction:len() * 15
+        direction = direction / direction:len() * 22
 
         love.graphics.setColor(255, 0, 0, 150)
+        love.graphics.setLineWidth(3)
         love.graphics.line(self.pos.x, self.pos.y, self.pos.x + direction.x, self.pos.y + direction.y)
+        love.graphics.setLineWidth(1)
     else
         love.graphics.setColor(0, 0, 0, 150)
         love.graphics.circle("fill", self.pos.x, self.pos.y, 3, 10)

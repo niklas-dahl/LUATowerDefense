@@ -1,10 +1,10 @@
 
 LaserTower = Tower.create()
 LaserTower.__index = LaserTower
-LaserTower.radius = 270
+LaserTower.radius = 190
 LaserTower.cost = 900
 LaserTower.name = "Laser Tower"
-LaserTower.shoot_speed = 2.0
+LaserTower.shoot_speed = 3.0
 
 function LaserTower.create()
     local instance = {}

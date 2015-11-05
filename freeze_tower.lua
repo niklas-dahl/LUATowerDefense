@@ -7,6 +7,7 @@ FreezeTower.radius = 100
 FreezeTower.cost = 600
 FreezeTower.name = "Freeze Tower"
 FreezeTower.shoot_frequency = 0.8
+FreezeTower.damage = 0
 
 
 function FreezeTower:shoot_projectile()
