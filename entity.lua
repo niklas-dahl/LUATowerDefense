@@ -16,6 +16,7 @@ function Entity.create()
     instance.color = {255, 100, 100}
     instance.size = 10
     instance.slow_factor = 0.0
+    instance.progress = 0.0
     return instance
 end
 
@@ -37,6 +38,8 @@ function Entity:draw()
         love.graphics.setColor(255 - pct_hp * 255.0, pct_hp * 255.0, 0, 255)
         love.graphics.rectangle("fill", pos.x - 10, hp_y, 20 * pct_hp, 3)
     end
+
+    love.graphics.setColor(0, 0, 0, 150)
 
 end
 
@@ -68,7 +71,10 @@ function Entity:update(dt)
 
     if true then
 
-        self.target_pct = self.target_pct + dt * self.speed * (1.0 - self.slow_factor)
+        local advance = dt * self.speed * math.max(0.001, 1.0 - self.slow_factor)
+
+        self.progress = self.progress + advance
+        self.target_pct = self.target_pct + advance
 
         self.slow_factor = self.slow_factor * (1.0 - dt)
 

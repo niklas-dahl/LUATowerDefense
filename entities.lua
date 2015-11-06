@@ -8,6 +8,18 @@ function criteria_closest(pos, entity)
     return -Vector.distance(pos, entity:get_pos())
 end
 
+function criteria_first(pos, entity)
+    return entity.progress
+end
+
+function criteria_last(pos, entity)
+    return -entity.progress
+end
+
+function criteria_strongest(pos, entity)
+    return entity.hp
+end
+
 
 
 -- Modes:
@@ -17,12 +29,24 @@ end
 -- Strongest -> get the entity in range which has the most hp
 function closest_entity(pos, max_radius, mode)
 
-    mode = mode or "Furthest"
-    max_radius = max_radius or 10000
+    mode = mode or "First"
+    -- max_radius = max_radius or 10000
 
-    local criteria_fnc = criteria_closest
+    local criteria_fnc = nil
 
-    local best_criteria = -1000000.0
+    if mode == "First" then
+        criteria_fnc = criteria_first
+    elseif mode == "Last" then
+        criteria_fnc = criteria_last
+    elseif mode == "Closest" then
+        criteria_fnc = criteria_closest
+    elseif mode == "Strongest" then
+        criteria_fnc = criteria_strongest
+    else
+        print("INVALID MODE: " .. mode)
+    end        
+
+    local best_criteria = -100000000.0
     local best = nil
 
     for i = 1, #entities do
@@ -48,9 +72,9 @@ function spawn_wave()
     for i = 1, 10+wave_id do
 
         local entity = Entity.create()
-        entity.speed = 2.0 + wave_id * 0.2
-        entity.max_hp = 10 + wave_id * 4
-        entity.money = 15 + wave_id * 1
+        entity.speed = 2.0 + wave_id * 0.13
+        entity.max_hp = 15 + wave_id * 5
+        entity.money = 15 + wave_id * 0.6
         entity.color = {206, 156, 58}
         entity.size = 10
 
@@ -64,7 +88,7 @@ function spawn_wave()
 
         -- Schnelle Einheiten
         if i % math.max(1, 10 - wave_id) == 0 then
-            entity.speed = entity.speed + 0.5
+            entity.speed = entity.speed + 0.3
         end
 
         -- Boss (Tank)
@@ -73,9 +97,11 @@ function spawn_wave()
             entity.max_hp = entity.max_hp * 12
             entity.speed = 1.0
             entity.size = 17
-            entity.money = entity.money + 5
+            entity.money = entity.money + 2
         end
         
+        entity.money = math.floor(entity.money)
+
         entity.hp = entity.max_hp
         table.insert(objs, entity)
     end

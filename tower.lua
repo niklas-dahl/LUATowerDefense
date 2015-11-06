@@ -18,7 +18,7 @@ function Tower.create()
     instance.last_shoot_time = 0.0
     instance.upgrade = 0
     instance.damage = 5
-    instance.focus_mode = "Furthest"
+    instance.focus_mode = "First"
     return instance
 end
 
@@ -149,9 +149,9 @@ end
 
 function Tower:update(dt)
     local pos = self:get_pos()
-    local new_target = closest_entity( pos, self.radius, "Furthest" )
-    
-    self.target = nil1
+    local new_target = closest_entity( pos, self.radius, self.focus_mode )
+
+    self.target = nil
     local time_diff = (love.timer.getTime() - self.last_shoot_time) * time_factor
 
     if self.shoot_frequency > 0 then
@@ -171,7 +171,6 @@ function Tower:update(dt)
 
         else
             self:update_idle(dt)
-
         end
     end
 end
