@@ -8,6 +8,7 @@ FreezeTower.name = "Freeze Tower"
 FreezeTower.shoot_frequency = 0.8
 FreezeTower.damage = 0
 FreezeTower.freeze_factor = 0.75
+FreezeTower.single_target = false
 
 function FreezeTower:shoot_projectile()
     local proj = FreezeProjectile.create()

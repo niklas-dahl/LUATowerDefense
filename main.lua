@@ -123,6 +123,14 @@ function love.update(dt)
         if any_entities_left == false and #entity_queue == 0 then
             stop_wave()
         end
+    else
+        -- IDLE Tower updaten
+        for i = 1, #towers do
+            local tower = towers[i]
+            tower:update_idle(dt * time_factor)
+        end
+        
+
 
     end
 end
@@ -138,9 +146,7 @@ function love.draw()
     if true then
 
         -- Feld zeichnen
-
         love.graphics.setScissor(field_start.x, field_start.y, field_width * field_size.x, field_height * field_size.y)
-
         draw_field()
 
         -- Draw projectiles
@@ -162,8 +168,6 @@ function love.draw()
         end
 
         love.graphics.setScissor()
-
-
         draw_gui()
 
     end

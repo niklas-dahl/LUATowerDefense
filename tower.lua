@@ -5,6 +5,7 @@ Tower.__index = Tower
 Tower.radius = 100
 Tower.cost = 200
 Tower.name = "Default Tower"
+Tower.single_target = true
 
 function Tower.create()
     local instance = {}
@@ -16,6 +17,8 @@ function Tower.create()
     instance.last_shoot_time = 0.0
     instance.upgrade = 0
     instance.damage = 5
+    Tower.direction = 0
+    
     return instance
 end
 
@@ -57,6 +60,18 @@ end
 
 function Tower.draw_shape(clstype, x, y, radius, upgrade, is_valid, selected)
 
+    if clstype.single_target and clstype.direction ~= nil then
+        local pipe_w = 2
+        local pipe_h = 20
+
+        love.graphics.push()
+        love.graphics.translate(x, y)
+        love.graphics.rotate(clstype.direction)
+        love.graphics.setColor(60, 60, 60, 255)
+        love.graphics.rectangle("fill", -pipe_w, -pipe_h, 2 * pipe_w, pipe_h)
+        love.graphics.pop()
+    end
+
     clstype.draw_inner_shape(x, y, upgrade)
 
     big_upgrade = math.floor(upgrade / 7)
@@ -77,13 +92,14 @@ function Tower.draw_shape(clstype, x, y, radius, upgrade, is_valid, selected)
         love.graphics.rectangle("fill", x - uoffsx - 4 + 4 * i, y + field_size.y*0.4 - 4 + uoffsy, 3, 3)
     end
 
-
-
-
     if big_upgrade > 0 then
         -- love.graphics.setColor(255, 255, 255, 255)
         -- love.graphics.draw(img_star, x - 8, y - 8)
     end
+
+
+
+
 
     if radius >= 0 and radius < 5000 then
 
@@ -132,7 +148,7 @@ end
 
 
 
-function Tower:update()
+function Tower:update(dt)
     local pos = self:get_pos()
     local new_target = closest_entity( pos )
     
@@ -142,16 +158,25 @@ function Tower:update()
     if self.shoot_frequency > 0 then
         if new_target ~= nil then
             local target_pos = new_target:get_pos()
-            local dist = Vector.distance(target_pos, pos)
+            local vec = pos - target_pos
+            local dist = vec:len()
+
+            local wanted_direction = math.atan2(vec.y, vec.x) - 0.5 * math.pi
+            local mix_factor = math.min(1.0, dt * 4.0)
+            self.direction = self.direction * (1.0 - mix_factor) + wanted_direction * mix_factor
+
             if dist < self.radius then
                 self.target = new_target
                 
                 if time_diff > self.shoot_frequency then
-
                     self:shoot_projectile()
                     self.last_shoot_time = love.timer.getTime()
                 end
             end
         end
     end
+end
+
+function Tower:update_idle(dt)
+    self.direction = self.direction + dt
 end
