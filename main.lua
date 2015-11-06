@@ -11,6 +11,7 @@ require "freeze_projectile"
 require "entities"
 require "tower"
 require "gui"
+require "buttons"
 require "sound"
 require "laser_tower"
 require "freeze_tower"
@@ -36,7 +37,7 @@ function love.keypressed(key, unicode)
     end
 
     if key == "f9" then
-        magic = true
+        magic = not magic
     end
 end
 

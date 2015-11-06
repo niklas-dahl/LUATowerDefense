@@ -2,14 +2,8 @@
 gui_pos = Vector(1080, 100)
 
 
-btn_cheat = {["text"] = "Cheat", ["pos"] = Vector(gui_pos.x, 830), ["size"] = Vector(150, 40) }
-btn_upgrade = {["text"] = "Upgrade Tower", ["pos"] = Vector(850, 750), ["size"] = Vector(130, 40) }
-btn_mute = {["text"] = "Mute", ["pos"] = Vector(gui_pos.x+120, 38), ["size"] = Vector(32, 32), ["img"] = "res/mute.png", ["alt_img"] = "res/unmute.png", ["use_alt_img"] = true}
-btn_start_wave_new = {["pos"] = Vector(gui_pos.x, 550), ["size"] = Vector(64, 64), ["img"] = "res/start_wave.png"}
-btn_fast_forward_new = {["pos"] = Vector(gui_pos.x + 80, 550), ["size"] = Vector(64, 64), ["img"] = "res/fast_forward.png", ["alt_img"] = "res/normal_speed.png", ["use_alt_img"] = false}
 
-
-ctrl_towers = Vector(gui_pos.x, gui_pos.y + 130)
+ctrl_towers = Vector(gui_pos.x, gui_pos.y)
 
 
 function is_hovered(pos, size)
@@ -30,8 +24,6 @@ end
 function is_btn_hovered(btn)
     return is_hovered(btn.pos, btn.size)
 end
-
-
 
 function render_button(btn, disabled)
         
@@ -222,14 +214,16 @@ function draw_gui()
 
     love.graphics.setFont(font)
 
-    love.graphics.setColor(20, 20, 20, 255)
-    love.graphics.print("DEBUG STATS: ", gui_pos.x, gui_pos.y + 0)
-    love.graphics.print("Projectiles: " .. #projectiles, gui_pos.x, gui_pos.y + 20)
-    love.graphics.print("Running: " .. tostring(simulation_running), gui_pos.x, gui_pos.y + 40)
-    love.graphics.print("Entities2spawn: " .. #entity_queue, gui_pos.x, gui_pos.y + 60)
-    love.graphics.print("Mouse: " .. mouse.x .. " / " .. mouse.y, gui_pos.x, gui_pos.y + 80)
-    love.graphics.print("Selected: " .. tostring(tower_under_cursor), gui_pos.x, gui_pos.y + 100)
-
+    if magic then
+        local dbg_top = love.graphics.getHeight() - 200
+        love.graphics.setColor(20, 20, 20, 255)
+        love.graphics.print("DEBUG STATS: ", gui_pos.x, dbg_top + 0)
+        love.graphics.print("Projectiles: " .. #projectiles, gui_pos.x, dbg_top + 20)
+        love.graphics.print("Running: " .. tostring(simulation_running), gui_pos.x, dbg_top + 40)
+        love.graphics.print("Entities2spawn: " .. #entity_queue, gui_pos.x, dbg_top + 60)
+        love.graphics.print("Mouse: " .. mouse.x .. " / " .. mouse.y, gui_pos.x, dbg_top + 80)
+        love.graphics.print("Selected: " .. tostring(tower_under_cursor), gui_pos.x, dbg_top + 100)
+    end
 
     -- buttons
     -- render_button(btn_start_wave, simulation_running)
