@@ -45,7 +45,7 @@ end
 
 
 function LaserTower:do_internal_upgrade()
-    self.damage = self.damage + self.upgrade * self.upgrade
+    self.damage = self.damage + self.upgrade * self.upgrade + 2
     self.radius = self.radius + 5
     self.shoot_frequency = self.shoot_frequency * 0.99
 end

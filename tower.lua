@@ -3,7 +3,7 @@
 Tower = {}
 Tower.__index = Tower
 Tower.radius = 100
-Tower.cost = 350
+Tower.cost = 250
 Tower.name = "Default Tower"
 Tower.single_target = true
 Tower.direction = 0
