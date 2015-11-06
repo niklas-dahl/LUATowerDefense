@@ -133,7 +133,7 @@ function Tower:do_upgrade()
 end
 
 function Tower:do_internal_upgrade()
-    self.damage = self.damage + self.upgrade + 3
+    self.damage = self.damage + math.floor(self.upgrade*self.upgrade*0.5) + 8
     self.radius = self.radius + 5
     self.shoot_frequency = self.shoot_frequency * 0.976
 end

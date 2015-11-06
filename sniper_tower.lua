@@ -26,7 +26,7 @@ function SniperTower:shoot_projectile()
 end
 
 function SniperTower:do_internal_upgrade()
-    self.damage = self.damage + math.floor(self.upgrade * self.upgrade * 0.26) + 3
+    self.damage = self.damage + math.floor(self.upgrade * self.upgrade * 0.5) + 3
     self.radius = self.radius + 5
     self.shoot_frequency = self.shoot_frequency * 0.96
 end

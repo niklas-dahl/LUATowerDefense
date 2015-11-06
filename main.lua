@@ -174,6 +174,11 @@ function love.draw()
         end
 
         love.graphics.setScissor()
+
+        -- Draw Field borders
+        love.graphics.setColor(100, 100, 100, 255)
+        love.graphics.rectangle("line", field_start.x, field_start.y, field_width * field_size.x, field_height * field_size.y)
+
         draw_gui()
 
     end

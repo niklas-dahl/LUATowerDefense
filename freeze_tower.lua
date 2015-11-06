@@ -3,7 +3,7 @@
 FreezeTower = Tower.create()
 FreezeTower.__index = FreezeTower
 FreezeTower.radius = 100
-FreezeTower.cost = 600
+FreezeTower.cost = 500
 FreezeTower.name = "Freeze Tower"
 FreezeTower.shoot_frequency = 1.5
 FreezeTower.damage = 0
