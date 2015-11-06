@@ -13,7 +13,7 @@ function Tower.create()
     instance.field_pos = Vector(2, 2)
     instance.target = nil
     instance.shoot_frequency = 0.3
-    instance.shoot_speed = 1.0
+    instance.shoot_speed = 1.7
     instance.last_shoot_time = 0.0
     instance.upgrade = 0
     instance.damage = 5

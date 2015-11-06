@@ -27,11 +27,16 @@ function Entity:draw()
     love.graphics.circle("fill", pos.x, pos.y, self.size, self.size*2)
 
     local pct_hp = self.hp / self.max_hp
-    local hp_y = pos.y + self.size + 4
+    local hp_y = pos.y + self.size + 6
 
-    love.graphics.setColor(255 - pct_hp * 255.0, pct_hp * 255.0, 0, 255)
-    love.graphics.rectangle("line", pos.x - 10, hp_y, 20, 4)
-    love.graphics.rectangle("fill", pos.x - 10, hp_y, 20 * pct_hp, 4)
+    local border = 2
+    if pct_hp < 1 then
+
+        love.graphics.setColor(0, 0, 0, 150)
+        love.graphics.rectangle("fill", pos.x - 10 - border, hp_y - border, 20 + 2*border, 3 + 2 * border)
+        love.graphics.setColor(255 - pct_hp * 255.0, pct_hp * 255.0, 0, 255)
+        love.graphics.rectangle("fill", pos.x - 10, hp_y, 20 * pct_hp, 3)
+    end
 
 end
 
