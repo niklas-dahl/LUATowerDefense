@@ -309,10 +309,28 @@ function draw_gui()
         love.graphics.print(selected_tower.name, upgrade_pos.x + 10, upgrade_pos.y + 10)
         love.graphics.setFont(font)
         love.graphics.setColor(20, 20, 20, 190)
-        love.graphics.print("Upgrade: " .. (selected_tower.upgrade), upgrade_pos.x + 10, upgrade_pos.y + 50)
-        love.graphics.print("Radius: " .. (selected_tower.radius), upgrade_pos.x + 10, upgrade_pos.y + 70)
-        love.graphics.print("Damage: " .. (selected_tower.damage), upgrade_pos.x + 10, upgrade_pos.y + 90)
-        love.graphics.print("Shoot speed: " .. (math.floor(1.0 / selected_tower.shoot_frequency * 10.0) / 10.0), upgrade_pos.x + 10, upgrade_pos.y + 110)
+        
+
+        local line = 0
+        love.graphics.print("Upgrade: " .. (selected_tower.upgrade), upgrade_pos.x + 10, upgrade_pos.y + 50 + 20 * line)
+        line = line + 1
+        love.graphics.print("Radius: " .. (selected_tower.radius), upgrade_pos.x + 10, upgrade_pos.y + 50 + 20 * line)
+        line = line + 1
+        
+        if selected_tower.damage > 0 then
+            love.graphics.print("Damage: " .. (selected_tower.damage), upgrade_pos.x + 10, upgrade_pos.y + 50 + 20 * line)
+            line = line + 1
+        end
+
+        if selected_tower.freeze_factor ~= nil then
+            love.graphics.print("Slow Factor: " .. math.floor(selected_tower.freeze_factor * 100.0) .. "%", upgrade_pos.x + 10, upgrade_pos.y + 50 + 20 * line)
+            line = line + 1
+        end
+
+        love.graphics.print("Shoot speed: " .. (math.floor(1.0 / selected_tower.shoot_frequency * 10.0) / 10.0), upgrade_pos.x + 10, upgrade_pos.y + 50 + 20 * line)
+        line = line + 1
+
+
 
         local cost = selected_tower:get_upgrade_cost()
 

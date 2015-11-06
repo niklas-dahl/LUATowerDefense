@@ -12,6 +12,7 @@ function FreezeProjectile.create()
     instance.damage = 0
     instance.pct = 0
     instance.radius = 100
+    instance.freeze_factor = 0.75
     table.insert(projectiles, instance)
     return instance
 end
@@ -29,7 +30,7 @@ function FreezeProjectile:update(dt)
         if entity ~= nil and not entity.destroyed then
             local dist = Vector.distance(entity:get_pos(), self.pos)
             if dist < self.radius * self.pct * self.pct then
-                entity:slow_by(0.75)
+                entity:slow_by(self.freeze_factor)
             end
         end
     end
