@@ -348,7 +348,7 @@ function draw_gui()
 
     end
 
-
+    love.graphics.setColor(50, 50, 50, 255)
     love.graphics.print("FPS: " .. love.timer.getFPS(), love.graphics.getWidth() - 80, love.graphics.getHeight() - 35)
 
 end

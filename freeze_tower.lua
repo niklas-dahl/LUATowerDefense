@@ -5,7 +5,7 @@ FreezeTower.__index = FreezeTower
 FreezeTower.radius = 100
 FreezeTower.cost = 600
 FreezeTower.name = "Freeze Tower"
-FreezeTower.shoot_frequency = 0.8
+FreezeTower.shoot_frequency = 1.5
 FreezeTower.damage = 0
 FreezeTower.freeze_factor = 0.75
 FreezeTower.single_target = false
@@ -27,9 +27,10 @@ function FreezeTower:create()
 end
 
 function FreezeTower:do_upgrade()
-    Tower.do_upgrade(self)
-    self.damage = 0
-    self.freeze_factor = self.freeze_factor * 1.1
+    self.upgrade = self.upgrade + 1
+    self.radius = self.radius + 2
+    self.shoot_frequency = self.shoot_frequency * 0.995
+    self.freeze_factor = self.freeze_factor * 0.97 + 0.03
 end
 
 function FreezeTower.draw_inner_shape(x, y, upgrade)

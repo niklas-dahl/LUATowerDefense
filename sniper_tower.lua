@@ -2,7 +2,7 @@
 
 SniperTower = Tower.create()
 SniperTower.__index = SniperTower
-SniperTower.radius = 10000
+SniperTower.radius = 320
 SniperTower.cost = 850
 SniperTower.name = "Sniper Tower"
 SniperTower.shoot_speed = 6.0
@@ -14,8 +14,6 @@ function SniperTower.create()
     setmetatable(instance, SniperTower)
     return instance
 end
-
-
 
 function SniperTower:shoot_projectile()
     local proj = LineProjectile.create()
@@ -40,7 +38,6 @@ function SniperTower.draw_inner_shape(x, y, upgrade)
 
     love.graphics.line(x, y - 5, x, y - 3)
     love.graphics.line(x, y + 3, x, y + 5)
-
 
     love.graphics.setColor(30,30,30, 255)
     love.graphics.rectangle("line", x - 11, y - 11, 22, 22)
