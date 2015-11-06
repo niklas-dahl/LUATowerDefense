@@ -34,3 +34,20 @@ btn_fast_forward_new = {
     ["alt_img"] = "res/normal_speed.png",
     ["use_alt_img"] = false
 }
+
+tower_modes = {"First", "Last", "Closest", "Strongest"}
+
+btn_tower_modes = {}
+
+for i = 1, #tower_modes do
+
+    local btn = {
+        ["text"] = tower_modes[i],
+        ["mode"] = tower_modes[i],
+        ["pos"] = Vector(350 + (i-1) * 85, 760),
+        ["size"] = Vector(80, 30)
+    }
+
+    table.insert(btn_tower_modes, btn)
+
+end

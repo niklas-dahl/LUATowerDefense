@@ -1,7 +1,7 @@
 
 gui_pos = Vector(1080, 100)
 
-
+anything_hovered = false
 
 ctrl_towers = Vector(gui_pos.x, gui_pos.y)
 
@@ -36,11 +36,15 @@ function render_button(btn, disabled)
 
     -- if btn.img == nil then
     if hovered then
-        love.graphics.setColor(color[1]*0.8, color[2]*0.8, color[3]*0.8, 150)
+        love.graphics.setColor(color[1]*0.97, color[2]*0.97, color[3]*0.97, 230)
     else
         love.graphics.setColor(color[1], color[2], color[3], 255)
     end
     -- end
+
+    if hovered then
+        anything_hovered = true
+    end
 
 
 
@@ -118,6 +122,9 @@ function check_button_actions()
             fast_forward = true
             time_factor = 4.0
             btn_fast_forward_new.use_alt_img = true
+            if not simulation_running then
+                start_wave()
+            end
             -- btn_fast_forward.text = "Disable Fast Forward"
         end
     end
@@ -131,6 +138,17 @@ function check_button_actions()
         else
             btn_mute.text = "Mute"
         end
+    end
+
+
+    -- BTN Modes
+    for i = 1, #btn_tower_modes do
+        local btn = btn_tower_modes[i]
+
+        if is_btn_hovered(btn) and selected_tower ~= nil then
+            selected_tower.focus_mode = btn.mode
+        end
+
     end
 
 
@@ -226,17 +244,12 @@ function draw_gui()
     end
 
     -- buttons
-    -- render_button(btn_start_wave, simulation_running)
     render_button(btn_start_wave_new, simulation_running)
-    
-    if not simulation_running then
-    end
 
     if magic then
         render_button(btn_cheat)
     end
 
-    -- render_button(btn_fast_forward)
     render_button(btn_mute)
     render_button(btn_fast_forward_new)
 
@@ -261,6 +274,8 @@ function draw_gui()
         if is_hovered(offs, field_size) then
             love.graphics.setColor(0, 0, 0, 30)
             love.graphics.rectangle("fill", offs.x, offs.y, field_size.x, field_size.y)
+
+            anything_hovered = true
 
         end
         love.graphics.setColor(0, 0, 0, 50)
@@ -297,6 +312,10 @@ function draw_gui()
 
 
     if selected_tower ~= nil then
+
+        love.graphics.setColor(0, 0, 0, 20)
+        love.graphics.rectangle("fill", upgrade_pos.x, upgrade_pos.y, 1000, 140)
+
 
         love.graphics.setColor(0, 144, 255, 255)
         love.graphics.setFont(big_font)
@@ -344,6 +363,22 @@ function draw_gui()
             love.graphics.print("Can't afford upgrade!", 850, 750)  
 
         end
+            
+        love.graphics.setColor(30, 30, 30, 255)
+        love.graphics.print("Focus mode: ", 350, 735)
+
+        for k = 1, #btn_tower_modes do
+            local btn = btn_tower_modes[k]
+
+            if selected_tower.focus_mode == btn.mode then
+                btn["color"] = {0, 144, 255}
+            else
+                btn["color"] = {50, 50, 50}
+            end
+
+            render_button(btn)
+        end
+
 
 
     end

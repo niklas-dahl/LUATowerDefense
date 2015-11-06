@@ -2,22 +2,43 @@
 entities = {}
 entity_queue = {}
 
-function closest_entity(pos)
 
-    local closest_dist = 100000.0
-    local closest = nil
+
+function criteria_closest(pos, entity)
+    return -Vector.distance(pos, entity:get_pos())
+end
+
+
+
+-- Modes:
+-- Furthest -> get the entity in range which has progressed most
+-- Closest -> get the entity in range which is closest
+-- Last -> get the entity which has progressed least
+-- Strongest -> get the entity in range which has the most hp
+function closest_entity(pos, max_radius, mode)
+
+    mode = mode or "Furthest"
+    max_radius = max_radius or 10000
+
+    local criteria_fnc = criteria_closest
+
+    local best_criteria = -1000000.0
+    local best = nil
 
     for i = 1, #entities do
         local entity = entities[i]
         if entity ~= nil then
             local dist = Vector.distance(pos, entity:get_pos())
-            if dist < closest_dist then
-                closest_dist = dist
-                closest = entity
+            if dist < max_radius then
+                local crit = criteria_fnc(pos, entity)
+                if crit > best_criteria then
+                    best = entity
+                    best_criteria = crit
+                end
             end
         end
     end
-    return closest
+    return best
 end
 
 

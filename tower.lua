@@ -6,6 +6,7 @@ Tower.radius = 100
 Tower.cost = 200
 Tower.name = "Default Tower"
 Tower.single_target = true
+Tower.direction = 0
 
 function Tower.create()
     local instance = {}
@@ -17,8 +18,7 @@ function Tower.create()
     instance.last_shoot_time = 0.0
     instance.upgrade = 0
     instance.damage = 5
-    Tower.direction = 0
-    
+    instance.focus_mode = "Furthest"
     return instance
 end
 
@@ -149,29 +149,29 @@ end
 
 function Tower:update(dt)
     local pos = self:get_pos()
-    local new_target = closest_entity( pos )
+    local new_target = closest_entity( pos, self.radius, "Furthest" )
     
-    self.target = nil
+    self.target = nil1
     local time_diff = (love.timer.getTime() - self.last_shoot_time) * time_factor
 
     if self.shoot_frequency > 0 then
         if new_target ~= nil then
             local target_pos = new_target:get_pos()
             local vec = pos - target_pos
-            local dist = vec:len()
 
             local wanted_direction = math.atan2(vec.y, vec.x) - 0.5 * math.pi
-            local mix_factor = math.min(1.0, dt * 4.0)
+            local mix_factor = math.min(1.0, dt * 12.0)
             self.direction = self.direction * (1.0 - mix_factor) + wanted_direction * mix_factor
-
-            if dist < self.radius then
-                self.target = new_target
-                
-                if time_diff > self.shoot_frequency then
-                    self:shoot_projectile()
-                    self.last_shoot_time = love.timer.getTime()
-                end
+            self.target = new_target
+            
+            if time_diff > self.shoot_frequency then
+                self:shoot_projectile()
+                self.last_shoot_time = love.timer.getTime()
             end
+
+        else
+            self:update_idle(dt)
+
         end
     end
 end

@@ -65,6 +65,10 @@ function love.load(arg)
     background = love.graphics.newImage("res/background.png")
     img_slow = love.graphics.newImage("res/slow.png")
     load_field()
+
+
+    pointer_cursor = love.mouse.getSystemCursor("hand")
+
 end
 
 
@@ -138,6 +142,8 @@ end
 
 function love.draw()
 
+    anything_hovered = false
+
     love.graphics.setColor(255, 255, 255, 255)
     love.graphics.draw(background, 0, 0)
     love.graphics.setColor(100, 100, 100, 255)
@@ -179,6 +185,12 @@ function love.draw()
         love.graphics.setFont(very_big_font)
         love.graphics.print("GAME OVER!", love.graphics.getWidth() / 2 - 120, love.graphics.getHeight() / 2 - 30)
         love.graphics.setFont(font)
+    end
+
+    if anything_hovered then
+        love.mouse.setCursor(pointer_cursor)
+    else
+        love.mouse.setCursor()
     end
 
 end
