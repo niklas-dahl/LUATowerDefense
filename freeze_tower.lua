@@ -26,9 +26,8 @@ function FreezeTower:create()
     return instance
 end
 
-function FreezeTower:do_upgrade()
-    self.upgrade = self.upgrade + 1
-    self.radius = self.radius + 2
+function FreezeTower:do_internal_upgrade()
+    self.radius = self.radius + 3
     self.shoot_frequency = self.shoot_frequency * 0.995
     self.freeze_factor = self.freeze_factor * 0.97 + 0.03
 end

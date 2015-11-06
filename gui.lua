@@ -102,6 +102,7 @@ function check_button_actions()
             if selected_tower:get_upgrade_cost() <= player_money then
                 if selected_tower:can_upgrade() then
                     player_money = player_money - selected_tower:get_upgrade_cost()
+
                     selected_tower:do_upgrade()
                     playSound("upgrade")
                 end
@@ -145,7 +146,7 @@ function check_button_actions()
     for i = 1, #btn_tower_modes do
         local btn = btn_tower_modes[i]
 
-        if is_btn_hovered(btn) and selected_tower ~= nil then
+        if is_btn_hovered(btn) and selected_tower ~= nil and selected_tower.single_target then
             selected_tower.focus_mode = btn.mode
         end
 
@@ -192,6 +193,7 @@ function on_gui_click(x, y)
             rel_pos = rel_pos / field_size + 0.5
             local tower = tower_under_cursor.create()
             tower.field_pos = rel_pos
+            tower.money_spent_on = tower.cost
 
             table.insert(towers, tower)
             player_money = player_money - tower.cost
@@ -325,13 +327,30 @@ function draw_gui()
         
 
         local line = 0
+
+        local dps = selected_tower.damage / selected_tower.shoot_frequency
+
         love.graphics.print("Upgrade: " .. (selected_tower.upgrade), upgrade_pos.x + 10, upgrade_pos.y + 50 + 20 * line)
+
+        if magic then
+            love.graphics.print("Money spent: " .. (selected_tower.money_spent_on), upgrade_pos.x + 150, upgrade_pos.y + 50 + 20 * line)
+        end
+
         line = line + 1
         love.graphics.print("Radius: " .. (selected_tower.radius), upgrade_pos.x + 10, upgrade_pos.y + 50 + 20 * line)
+        
+        if magic then
+            love.graphics.print("DPS/100$: " .. math.floor(dps / selected_tower.money_spent_on * 100.0 * 10.0) / 10.0, upgrade_pos.x + 150, upgrade_pos.y + 50 + 20 * line)
+        end 
         line = line + 1
         
         if selected_tower.damage > 0 then
             love.graphics.print("Damage: " .. (selected_tower.damage), upgrade_pos.x + 10, upgrade_pos.y + 50 + 20 * line)
+
+            if magic then
+                love.graphics.print("DPS: " .. math.floor(dps*10)/10.0, upgrade_pos.x + 150, upgrade_pos.y + 50 + 20 * line)
+            end
+
             line = line + 1
         end
 
@@ -347,6 +366,7 @@ function draw_gui()
 
         local cost = selected_tower:get_upgrade_cost()
 
+        -- Upgrade button
         if cost <= player_money then
                 love.graphics.setColor(0, 100, 0, 255)
                 love.graphics.print("Cost: " .. cost .. "$", 850, 730)
@@ -364,19 +384,22 @@ function draw_gui()
 
         end
             
-        love.graphics.setColor(30, 30, 30, 255)
-        love.graphics.print("Focus mode: ", 350, 735)
+        -- Focus mode 
+        if selected_tower.single_target then
+            love.graphics.setColor(30, 30, 30, 255)
+            love.graphics.print("Focus mode: ", 350, 735)
 
-        for k = 1, #btn_tower_modes do
-            local btn = btn_tower_modes[k]
+            for k = 1, #btn_tower_modes do
+                local btn = btn_tower_modes[k]
 
-            if selected_tower.focus_mode == btn.mode then
-                btn["color"] = {0, 144, 255}
-            else
-                btn["color"] = {50, 50, 50}
+                if selected_tower.focus_mode == btn.mode then
+                    btn["color"] = {0, 144, 255}
+                else
+                    btn["color"] = {50, 50, 50}
+                end
+
+                render_button(btn)
             end
-
-            render_button(btn)
         end
 
 

@@ -3,7 +3,7 @@
 Tower = {}
 Tower.__index = Tower
 Tower.radius = 100
-Tower.cost = 200
+Tower.cost = 350
 Tower.name = "Default Tower"
 Tower.single_target = true
 Tower.direction = 0
@@ -19,6 +19,7 @@ function Tower.create()
     instance.upgrade = 0
     instance.damage = 5
     instance.focus_mode = "First"
+    instance.money_spent_on = 0
     return instance
 end
 
@@ -61,7 +62,7 @@ end
 function Tower.draw_shape(clstype, x, y, radius, upgrade, is_valid, selected)
 
     if clstype.single_target and clstype.direction ~= nil then
-        local pipe_w = 2
+        local pipe_w = 3
         local pipe_h = 20
 
         love.graphics.push()
@@ -126,10 +127,15 @@ function Tower.draw_shape(clstype, x, y, radius, upgrade, is_valid, selected)
 end
 
 function Tower:do_upgrade()
+    self.money_spent_on = self.money_spent_on + self:get_upgrade_cost()
     self.upgrade = self.upgrade + 1
-    self.damage = self.damage + self.upgrade + 1
+    self:do_internal_upgrade()
+end
+
+function Tower:do_internal_upgrade()
+    self.damage = self.damage + self.upgrade + 3
     self.radius = self.radius + 5
-    self.shoot_frequency = self.shoot_frequency * 0.97
+    self.shoot_frequency = self.shoot_frequency * 0.976
 end
 
 function Tower:can_upgrade()
@@ -161,6 +167,7 @@ function Tower:update(dt)
 
             local wanted_direction = math.atan2(vec.y, vec.x) - 0.5 * math.pi
             local mix_factor = math.min(1.0, dt * 12.0)
+            mix_factor = 1.0
             self.direction = self.direction * (1.0 - mix_factor) + wanted_direction * mix_factor
             self.target = new_target
             
@@ -176,5 +183,5 @@ function Tower:update(dt)
 end
 
 function Tower:update_idle(dt)
-    self.direction = self.direction + dt
+    self.direction = self.direction + dt * 0.2
 end

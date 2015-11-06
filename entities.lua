@@ -73,7 +73,7 @@ function spawn_wave()
 
         local entity = Entity.create()
         entity.speed = 2.0 + wave_id * 0.13
-        entity.max_hp = 15 + wave_id * 5
+        entity.max_hp = 15 + wave_id * 9
         entity.money = 15 + wave_id * 0.6
         entity.color = {206, 156, 58}
         entity.size = 10
@@ -94,7 +94,7 @@ function spawn_wave()
         -- Boss (Tank)
         if i % 10 == 9 and wave_id > 2 then
             entity.color = {180, 40, 67}
-            entity.max_hp = entity.max_hp * 12
+            entity.max_hp = entity.max_hp * 7
             entity.speed = 1.0
             entity.size = 17
             entity.money = entity.money + 2

@@ -6,8 +6,8 @@ SniperTower.radius = 320
 SniperTower.cost = 850
 SniperTower.name = "Sniper Tower"
 SniperTower.shoot_speed = 6.0
-SniperTower.shoot_frequency = 1.5
-SniperTower.damage = 12
+SniperTower.shoot_frequency = 1.3
+SniperTower.damage = 22
 
 function SniperTower.create()
     local instance = {}
@@ -23,6 +23,12 @@ function SniperTower:shoot_projectile()
 
     self.target:on_hit(self.damage)
     return proj
+end
+
+function SniperTower:do_internal_upgrade()
+    self.damage = self.damage + math.floor(self.upgrade * self.upgrade * 0.2) + 3
+    self.radius = self.radius + 5
+    self.shoot_frequency = self.shoot_frequency * 0.96
 end
 
 function SniperTower.draw_inner_shape(x, y, upgrade)
