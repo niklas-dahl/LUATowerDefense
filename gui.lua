@@ -220,8 +220,13 @@ function update_gui()
 end
 
 function draw_gui()
-
     -- stats
+    local padding = 10
+    local grey_value = 210
+    love.graphics.setColor(grey_value, grey_value, grey_value)
+    love.graphics.rectangle("fill", 600-padding, 40-padding, 1080-600+100+padding, 40+padding)
+    love.graphics.setColor(0,0,0)
+    love.graphics.rectangle("line", 600-padding, 40-padding, 1080-600+100+padding, 40+padding)
 
     love.graphics.setFont(big_font)
     love.graphics.setColor(52, 201, 36, 255)
@@ -360,7 +365,7 @@ function draw_gui()
         end
 
         love.graphics.print("Shoot speed: " .. (math.floor(1.0 / selected_tower.shoot_frequency * 10.0) / 10.0), upgrade_pos.x + 10, upgrade_pos.y + 50 + 20 * line)
-        
+
         love.graphics.print("Kills: " .. (selected_tower.kill_count), upgrade_pos.x + 150, upgrade_pos.y + 50 + 20 * line)
         line = line + 1
         
