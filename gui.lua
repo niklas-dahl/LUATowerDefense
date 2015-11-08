@@ -360,8 +360,10 @@ function draw_gui()
         end
 
         love.graphics.print("Shoot speed: " .. (math.floor(1.0 / selected_tower.shoot_frequency * 10.0) / 10.0), upgrade_pos.x + 10, upgrade_pos.y + 50 + 20 * line)
+        
+        love.graphics.print("Kills: " .. (selected_tower.kill_count), upgrade_pos.x + 150, upgrade_pos.y + 50 + 20 * line)
         line = line + 1
-
+        
 
 
         local cost = selected_tower:get_upgrade_cost()

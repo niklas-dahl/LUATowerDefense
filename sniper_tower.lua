@@ -20,8 +20,12 @@ function SniperTower:shoot_projectile()
     proj.target_pos = self.target:get_pos()
     proj.start_pos = self:get_pos()
     proj.damage = self.damage
+    proj.source = self
 
     self.target:on_hit(self.damage)
+    if self.target.destroyed == true then
+        self.kill_count = self.kill_count + 1
+    end
     return proj
 end
 

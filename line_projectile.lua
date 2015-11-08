@@ -12,6 +12,7 @@ function LineProjectile.create()
     instance.damage = 1
     instance.duration = 0.12
     instance.time_visible = 0.0
+    instance.source = nil
     table.insert(projectiles, instance)
     return instance
 end

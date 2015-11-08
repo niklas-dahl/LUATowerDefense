@@ -13,6 +13,7 @@ function DirectedProjectile.create()
     instance.damage = 1
     instance.laserProjectile = false
     instance.lineProjectile = false
+    instance.source = nil
     table.insert(projectiles, instance)
     return instance
 end
@@ -30,6 +31,9 @@ function DirectedProjectile:update(dt)
 
     if dist < 20.0 then
         self.target:on_hit(self.damage)
+        if self.source ~= nil and self.target.destroyed == true then
+            self.source.kill_count = self.source.kill_count + 1
+        end
         return false
     end
 

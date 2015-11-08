@@ -19,6 +19,7 @@ function Tower.create()
     instance.upgrade = 0
     instance.damage = 5
     instance.focus_mode = "First"
+    instance.kill_count = 0
     instance.money_spent_on = 0
     return instance
 end
@@ -36,6 +37,7 @@ function Tower:shoot_projectile()
     proj.speed = self.shoot_speed
     proj.damage = self.damage
     proj.pos = self:get_pos()
+    proj.source = self
     return proj
 end
 
