@@ -53,6 +53,7 @@ end
 function love.load(arg)
 
     playMusic("music")
+    toggleMute()
 
     font = love.graphics.newFont("res/font.ttf", 14)
     love.graphics.setFont(font)
@@ -62,6 +63,7 @@ function love.load(arg)
 
     img_star = love.graphics.newImage("res/star.png")
 
+    logo = love.graphics.newImage("res/logo-wip.png")
     background = love.graphics.newImage("res/background.png")
     img_slow = love.graphics.newImage("res/slow.png")
     load_field()
@@ -146,6 +148,7 @@ function love.draw()
 
     love.graphics.setColor(255, 255, 255, 255)
     love.graphics.draw(background, 0, 0)
+    love.graphics.draw(logo, 50, -25)
     love.graphics.setColor(100, 100, 100, 255)
     -- love.graphics.rectangle("fill", 0, 0, 10000, 10000)
 
