@@ -49,37 +49,27 @@ function draw_field()
             local obj = game_field[y][x]
             local offs = Vector(x - 1, y - 1) * field_size + field_start
             local draw_rect = true
-            local hovered = is_hovered(offs, field_size) and tower_under_cursor ~= nil
-            hovered = false
 
-            if obj == 1 then
+            if obj == 1 or obj == 2 then
                 
                 -- Start
+                love.graphics.setColor(20, 20, 20, 255)
                 if x == start_pos.x and y == start_pos.y then
-                    love.graphics.setColor(20, 20, 20, 255)
                     love.graphics.print("START", offs.x + 4, offs.y + 20)
                 
+                -- Ziel
+                elseif obj == 2 then
+                    love.graphics.print("END", offs.x + 10, offs.y + 20)
                 end
             
                 -- Strecke
                 love.graphics.setColor(0, 0, 0, 100)
-                if hovered then
-                    love.graphics.setColor(100, 0, 0, 100)
-                end
 
-            elseif obj == 2 then
-                -- Ziel
-                love.graphics.setColor(20, 20, 20, 255)
-                love.graphics.print("END", offs.x + 10, offs.y + 20)
-                love.graphics.setColor(0, 0, 0, 100)
             
             elseif obj == 0 then
                 -- Leer
                 love.graphics.setColor(0, 0, 0, 20)
-                
-                if hovered then
-                    love.graphics.setColor(0, 100, 0, 120)
-                end
+
             end
 
             if draw_rect then
