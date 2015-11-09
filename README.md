@@ -8,7 +8,7 @@ Some small fun project: Making a Tower Defense Game in LUA with __Löve2D__
 ## Getting Started
 Best way to clone the repository is to use
 ```
-git clone --depth 1
+git clone --depth=1
 ```
 (much smaler download)
 
