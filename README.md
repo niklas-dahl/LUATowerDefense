@@ -5,6 +5,13 @@ Some small fun project: Making a Tower Defense Game in LUA with __Löve2D__
 
 <img src="http://i.imgur.com/XuwsSbA.png">
 
+## Getting Started
+Best way to clone the repository is to use
+```
+git clone --depth 1
+```
+(much smaler download)
+
 ## ToDo
 - [ ] Balance
 - [ ] Different Upgrading Paths
