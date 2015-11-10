@@ -18,6 +18,10 @@ git clone --depth=1
 - [ ] More towers
 - [ ] Better buttons
 
+## Video
+Someone made a video about our game :D
+<iframe width="420" height="315" src="https://www.youtube.com/embed/WL6eG0H66cA" frameborder="0" allowfullscreen></iframe>
+
 ## Requirements
  - https://love2d.org/
 
