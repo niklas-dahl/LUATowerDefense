@@ -20,7 +20,9 @@ git clone --depth=1
 
 ## Video
 Someone made a video about our game :D
-<iframe width="420" height="315" src="https://www.youtube.com/embed/WL6eG0H66cA" frameborder="0" allowfullscreen></iframe>
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=WL6eG0H66cA
+" target="_blank"><img src="http://img.youtube.com/vi/WL6eG0H66cA/0.jpg" 
+alt="No video herre ? oO" width="240" height="180" border="10" /></a>
 
 ## Requirements
  - https://love2d.org/
