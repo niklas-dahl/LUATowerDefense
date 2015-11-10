@@ -19,7 +19,7 @@ git clone --depth=1
 - [ ] Better buttons
 
 ## Video
-Someone made a video about our game :D
+Someone made a video about our game! :D (video by Open Source Games)
 <br />
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=WL6eG0H66cA
 " target="_blank"><img src="http://img.youtube.com/vi/WL6eG0H66cA/0.jpg" 
