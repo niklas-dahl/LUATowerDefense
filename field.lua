@@ -74,6 +74,42 @@ function draw_field()
 
             if draw_rect then
                 love.graphics.rectangle("fill", offs.x, offs.y, field_size.x, field_size.y)
+                
+                if((game_field[y][x]==1 or game_field[y][x]==2) and x>0 and y>0 and x<=field_width and y<=field_height) then
+                    local bitmask = 0
+                    if(x<field_width and game_field[y][x+1] == 1) then bitmask = bitmask + 1 end
+                    if(y<field_height and game_field[y+1][x] == 1) then bitmask = bitmask + 2 end
+                    if(x>1 and game_field[y][x-1] == 1) then bitmask = bitmask + 4 end
+                    if(y>1 and game_field[y-1][x] == 1) then bitmask = bitmask + 8 end
+
+                    love.graphics.setColor(0,0,0)                    
+                    if(bitmask == 5) then -- ==
+                        love.graphics.line(offs.x, offs.y, offs.x+field_size.x, offs.y)
+                        love.graphics.line(offs.x, offs.y+field_size.y, offs.x+field_size.x, offs.y+field_size.y)
+                    end
+                    if(bitmask == 10 or bitmask == 2 or bitmask == 8) then -- ||    --hack for first and last tile
+                        love.graphics.line(offs.x, offs.y, offs.x, offs.y+field_size.y)
+                        love.graphics.line(offs.x+field_size.x, offs.y, offs.x+field_size.x, offs.y+field_size.y)
+                    end
+                    if(bitmask == 6) then
+                        love.graphics.line(offs.x, offs.y, offs.x+field_size.x, offs.y)
+                        love.graphics.line(offs.x+field_size.x, offs.y, offs.x+field_size.x, offs.y+field_size.y)
+                    end
+                    if(bitmask == 12) then
+                        love.graphics.line(offs.x, offs.y+field_size.y, offs.x+field_size.x, offs.y+field_size.y)
+                        love.graphics.line(offs.x+field_size.x, offs.y, offs.x+field_size.x, offs.y+field_size.y)
+                    end
+                    if(bitmask == 3 or bitmask == 1) then --hack for second last tile !
+                        love.graphics.line(offs.x, offs.y, offs.x+field_size.x, offs.y)
+                        love.graphics.line(offs.x, offs.y, offs.x, offs.y+field_size.y)
+                    end
+                    if(bitmask == 9) then
+                        love.graphics.line(offs.x, offs.y+field_size.y, offs.x+field_size.x, offs.y+field_size.y)
+                        love.graphics.line(offs.x, offs.y, offs.x, offs.y+field_size.y)
+                    end
+                    
+                end
+
             end
         end
     end 
