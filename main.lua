@@ -68,7 +68,6 @@ function love.load(arg)
     img_slow = love.graphics.newImage("res/slow.png")
     load_field()
 
-
     pointer_cursor = love.mouse.getSystemCursor("hand")
 
 end

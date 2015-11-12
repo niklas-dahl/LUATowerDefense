@@ -40,6 +40,16 @@ function load_field()
             game_field[y+1][x+1] = field
         end
     end
+
+    --floor tiles
+    floor_5 = love.graphics.newImage("res/floorTiles/wall_5.png")
+    floor_10 = love.graphics.newImage("res/floorTiles/wall_10.png")
+    floor_6 = love.graphics.newImage("res/floorTiles/wall_6.png")
+    floor_3 = love.graphics.newImage("res/floorTiles/wall_3.png")
+    floor_12 = love.graphics.newImage("res/floorTiles/wall_12.png")
+    floor_9 = love.graphics.newImage("res/floorTiles/wall_9.png")
+
+
 end
 
 function draw_field()
@@ -86,28 +96,46 @@ function draw_field()
                     if(bitmask == 5) then -- ==
                         love.graphics.line(offs.x, offs.y, offs.x+field_size.x, offs.y)
                         love.graphics.line(offs.x, offs.y+field_size.y, offs.x+field_size.x, offs.y+field_size.y)
+
+                        love.graphics.setColor(255, 255, 255, 255)
+                        love.graphics.draw(floor_5, offs.x, offs.y, 0, 50/64, 50/64)
                     end
                     if(bitmask == 10 or bitmask == 2 or bitmask == 8) then -- ||    --hack for first and last tile
                         love.graphics.line(offs.x, offs.y, offs.x, offs.y+field_size.y)
                         love.graphics.line(offs.x+field_size.x, offs.y, offs.x+field_size.x, offs.y+field_size.y)
+
+                        love.graphics.setColor(255, 255, 255, 255)
+                        love.graphics.draw(floor_10, offs.x, offs.y, 0, 50/64, 50/64)
                     end
                     if(bitmask == 6) then
                         love.graphics.line(offs.x, offs.y, offs.x+field_size.x, offs.y)
                         love.graphics.line(offs.x+field_size.x, offs.y, offs.x+field_size.x, offs.y+field_size.y)
+
+                        love.graphics.setColor(255, 255, 255, 255)
+                        love.graphics.draw(floor_6, offs.x, offs.y, 0, 50/64, 50/64)
                     end
                     if(bitmask == 12) then
                         love.graphics.line(offs.x, offs.y+field_size.y, offs.x+field_size.x, offs.y+field_size.y)
                         love.graphics.line(offs.x+field_size.x, offs.y, offs.x+field_size.x, offs.y+field_size.y)
+
+                        love.graphics.setColor(255, 255, 255, 255)
+                        love.graphics.draw(floor_12, offs.x, offs.y, 0, 50/64, 50/64)
                     end
                     if(bitmask == 3 or bitmask == 1) then --hack for second last tile !
                         love.graphics.line(offs.x, offs.y, offs.x+field_size.x, offs.y)
                         love.graphics.line(offs.x, offs.y, offs.x, offs.y+field_size.y)
+
+                        love.graphics.setColor(255, 255, 255, 255)
+                        love.graphics.draw(floor_3, offs.x, offs.y, 0, 50/64, 50/64)
                     end
                     if(bitmask == 9) then
                         love.graphics.line(offs.x, offs.y+field_size.y, offs.x+field_size.x, offs.y+field_size.y)
                         love.graphics.line(offs.x, offs.y, offs.x, offs.y+field_size.y)
+                        
+                        love.graphics.setColor(255, 255, 255, 255)
+                        love.graphics.draw(floor_9, offs.x, offs.y, 0, 50/64, 50/64)
                     end
-                    
+
                 end
 
             end
