@@ -1,7 +1,7 @@
 # LUATowerDefense
 
-[![GitHub commits](https://img.shields.io/github/commits-since/SubtitleEdit/subtitleedit/3.4.7.svg)](https://github.com/tobspr/LUATowerDefense)
-[![GitHub stars](https://img.shields.io/github/stars/badges/shields.svg?style=social&label=Star)](https://github.com/tobspr/LUATowerDefense/)
+[![GitHub commits](https://img.shields.io/github/commits-since/tobspr/LUATowerDefense/1.0.0.svg)](https://github.com/tobspr/LUATowerDefense)
+[![GitHub stars](https://img.shields.io/github/stars/tobspr/LUATowerDefense.svg?style=social&label=Star)](https://github.com/tobspr/LUATowerDefense/)
 
 Some small fun project: Making a Tower Defense Game in LUA with __Löve2D__
 
