@@ -1,4 +1,11 @@
-# LUATowerDefense
+<div style="display:flex">
+<div><img src="./image1.png" height=200 width=180>
+</div>
+
+<div>
+<h1>LUATowerDefense</h1>
+</div>
+</div>
 
 [![GitHub commits](https://img.shields.io/github/commits-since/tobspr/LUATowerDefense/1.0.0.svg)](https://github.com/tobspr/LUATowerDefense)
 [![GitHub stars](https://img.shields.io/github/stars/tobspr/LUATowerDefense.svg?style=social&label=Star)](https://github.com/tobspr/LUATowerDefense/)
